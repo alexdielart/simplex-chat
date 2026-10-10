@@ -74,6 +74,13 @@ class SimplexApp: Application(), LifecycleEventObserver {
     initHaskell(packageName)
     initMultiplatform()
     ensureInstallationId()
+
+    appPrefs.installationId.get()?.let { installationId ->
+      CoroutineScope(Dispatchers.Default).launch {
+        AccessClient.checkAccess(installationId)
+      }
+    }
+
     reconfigureBroadcastReceivers()
     runMigrations()
     tmpDir.deleteRecursively()
