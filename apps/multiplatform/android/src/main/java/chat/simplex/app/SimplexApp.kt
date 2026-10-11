@@ -75,11 +75,7 @@ class SimplexApp: Application(), LifecycleEventObserver {
     initMultiplatform()
     ensureInstallationId()
 
-    appPrefs.installationId.get()?.let { installationId ->
-      CoroutineScope(Dispatchers.Default).launch {
-        AccessClient.checkAccess(installationId)
-      }
-    }
+    AccessManager.start()
 
     reconfigureBroadcastReceivers()
     runMigrations()

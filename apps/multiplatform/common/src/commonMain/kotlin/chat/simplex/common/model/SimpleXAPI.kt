@@ -252,6 +252,7 @@ class AppPreferences {
   val customDisappearingMessageTime = mkIntPreference(SHARED_PREFS_CUSTOM_DISAPPEARING_MESSAGE_TIME, 300)
   val deviceNameForRemoteAccess = mkStrPreference(SHARED_PREFS_DEVICE_NAME_FOR_REMOTE_ACCESS, deviceName)
   val installationId = mkStrPreference(SHARED_PREFS_INSTALLATION_ID, null)
+  val accessLastKnownStatus = mkStrPreference(SHARED_PREFS_ACCESS_LAST_KNOWN_STATUS, null)
 
   val confirmRemoteSessions = mkBoolPreference(SHARED_PREFS_CONFIRM_REMOTE_SESSIONS, false)
   val connectRemoteViaMulticast = mkBoolPreference(SHARED_PREFS_CONNECT_REMOTE_VIA_MULTICAST, false)
@@ -502,6 +503,7 @@ class AppPreferences {
     private const val SHARED_PREFS_CUSTOM_DISAPPEARING_MESSAGE_TIME = "CustomDisappearingMessageTime"
     private const val SHARED_PREFS_DEVICE_NAME_FOR_REMOTE_ACCESS = "DeviceNameForRemoteAccess"
     private const val SHARED_PREFS_INSTALLATION_ID = "InstallationId"
+    private const val SHARED_PREFS_ACCESS_LAST_KNOWN_STATUS = "AccessLastKnownStatus"
     private const val SHARED_PREFS_CONFIRM_REMOTE_SESSIONS = "ConfirmRemoteSessions"
     private const val SHARED_PREFS_CONNECT_REMOTE_VIA_MULTICAST = "ConnectRemoteViaMulticast"
     private const val SHARED_PREFS_CONNECT_REMOTE_VIA_MULTICAST_AUTO = "ConnectRemoteViaMulticastAuto"
