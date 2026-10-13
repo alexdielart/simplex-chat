@@ -9,6 +9,17 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+enum class AccessUiState {
+  ACTIVE,
+  DISABLED,
+  PENDING,
+  CHECKING,
+  UNAVAILABLE,
+}
 
 object AccessManager {
   private const val TAG = "SimpleXAccess"
@@ -19,21 +30,28 @@ object AccessManager {
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
   private var monitoringJob: Job? = null
 
+  private val _uiState = MutableStateFlow(AccessUiState.CHECKING)
+  val uiState: StateFlow<AccessUiState> = _uiState.asStateFlow()
+
   fun start() {
     monitoringJob?.cancel()
+
+    val lastKnownStatus = getLastKnownStatus()
+    _uiState.value = lastKnownStatus.toUiState()
 
     monitoringJob = scope.launch {
       val installationId = appPrefs.installationId.get()
 
       if (installationId == null) {
         Log.e(TAG, "Installation ID is missing")
+        _uiState.value = AccessUiState.UNAVAILABLE
         return@launch
       }
 
       val startupResponse = checkAtStartup(installationId)
 
       if (startupResponse != null) {
-        saveConfirmedStatus(startupResponse.status)
+        applyConfirmedStatus(startupResponse.status)
 
         if (startupResponse.status == AccessStatus.ACTIVE) {
           runPeriodicChecks(
@@ -44,21 +62,42 @@ object AccessManager {
           Log.w(TAG, "Periodic access checks stopped: status=${startupResponse.status}")
         }
       } else {
-        val lastKnownStatus = getLastKnownStatus()
-
         Log.w(
           TAG,
           "Startup access check timed out; keeping last known status=$lastKnownStatus"
         )
 
-        if (lastKnownStatus == null || lastKnownStatus == AccessStatus.ACTIVE) {
-          runPeriodicChecks(
-            installationId,
-            DEFAULT_CHECK_INTERVAL_SECONDS
-          )
+        when (lastKnownStatus) {
+          AccessStatus.ACTIVE -> {
+            _uiState.value = AccessUiState.ACTIVE
+            runPeriodicChecks(
+              installationId,
+              DEFAULT_CHECK_INTERVAL_SECONDS
+            )
+          }
+
+          AccessStatus.DISABLED -> {
+            _uiState.value = AccessUiState.DISABLED
+          }
+
+          AccessStatus.PENDING -> {
+            _uiState.value = AccessUiState.PENDING
+          }
+
+          null -> {
+            _uiState.value = AccessUiState.UNAVAILABLE
+            runPeriodicChecks(
+              installationId,
+              DEFAULT_CHECK_INTERVAL_SECONDS
+            )
+          }
         }
       }
     }
+  }
+
+  fun retry() {
+    start()
   }
 
   private suspend fun checkAtStartup(
@@ -97,7 +136,7 @@ object AccessManager {
         continue
       }
 
-      saveConfirmedStatus(response.status)
+      applyConfirmedStatus(response.status)
 
       if (response.status != AccessStatus.ACTIVE) {
         Log.w(TAG, "Periodic access checks stopped: status=${response.status}")
@@ -108,8 +147,9 @@ object AccessManager {
     }
   }
 
-  private fun saveConfirmedStatus(status: AccessStatus) {
+  private fun applyConfirmedStatus(status: AccessStatus) {
     appPrefs.accessLastKnownStatus.set(status.wireValue)
+    _uiState.value = status.toUiState()
     Log.w(TAG, "Confirmed access status saved: $status")
   }
 
@@ -119,5 +159,13 @@ object AccessManager {
       AccessStatus.PENDING.wireValue -> AccessStatus.PENDING
       AccessStatus.DISABLED.wireValue -> AccessStatus.DISABLED
       else -> null
+    }
+
+  private fun AccessStatus?.toUiState(): AccessUiState =
+    when (this) {
+      AccessStatus.ACTIVE -> AccessUiState.ACTIVE
+      AccessStatus.DISABLED -> AccessUiState.DISABLED
+      AccessStatus.PENDING -> AccessUiState.PENDING
+      null -> AccessUiState.CHECKING
     }
 }

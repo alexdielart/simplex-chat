@@ -55,7 +55,7 @@ class MainActivity: FragmentActivity() {
     }
     enableEdgeToEdge()
     setContent {
-      AppScreen()
+      AccessControlledAppScreen()
     }
     SimplexApp.context.schedulePeriodicServiceRestartWorker()
     SimplexApp.context.schedulePeriodicWakeUp()
