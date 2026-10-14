@@ -30,7 +30,7 @@ android {
                 cppFlags("")
             }
         }
-        manifestPlaceholders["app_name"] = "@string/app_name"
+        manifestPlaceholders["app_name"] = rootProject.extra["app.name"] as String
         manifestPlaceholders["provider_authorities"] = "chat.simplex.app.provider"
         manifestPlaceholders["extract_native_libs"] = rootProject.extra["compression.level"] as Int != 0
     }

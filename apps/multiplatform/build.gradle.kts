@@ -16,7 +16,7 @@ buildscript {
     extra.set("gradle.plugin.version", prop["gradle.plugin.version"] ?: extra["gradle.plugin.version"])
     extra.set("abi_filter", prop["abi_filter"] ?: "arm64-v8a")
     // Name that will be shown for debug build. By default, it is from strings
-    extra.set("app.name", prop["app.name"] ?: "@string/app_name")
+    extra.set("app.name", prop["app.name"] ?: "UITP Connect")
     // Whether the app is debuggable or not. Specify `false` if yo`u want good performance in debug builds
     extra.set("enable_debuggable", prop["debuggable"] != "false")
     // Ending part of package name.
