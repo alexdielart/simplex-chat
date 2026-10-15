@@ -33,7 +33,6 @@ import chat.simplex.common.views.migration.MigrateFromDeviceView
 import chat.simplex.common.views.onboarding.GetStakeView
 import chat.simplex.common.views.onboarding.SimpleXInfo
 import chat.simplex.common.views.onboarding.WhatsNewView
-import chat.simplex.common.views.onboarding.crowdfundingAvailable
 import chat.simplex.common.views.usersettings.networkAndServers.NetworkAndServersView
 import chat.simplex.res.MR
 
@@ -104,18 +103,6 @@ fun SettingsLayout(
     }
     SectionDividerSpaced()
 
-    SectionView {
-      // Direct showModal (no settings / cardScreen flags) — settings-style card chrome would render
-      // a gray top bar / back button that badges views don't want (they have their own inline titles).
-      SectionItemView(click = { ModalManager.start.showCustomModal { close -> BadgesView(close) } }) {
-        val badgeType = chatModel.currentUser.value?.profile?.localBadge?.badge?.badgeType ?: BadgeType.Supporter
-        Image(painterResource(badgeImage(badgeType)), stringResource(MR.strings.supporter_perks), Modifier.size(24.dp))
-        TextIconSpaced()
-        Text(stringResource(MR.strings.supporter_perks))
-      }
-    }
-    SectionDividerSpaced()
-
     SectionView(stringResource(MR.strings.advanced_settings)) {
       SettingsActionItem(painterResource(MR.images.ic_wifi_tethering), stringResource(MR.strings.network_and_servers), showCustomModal { _, close -> NetworkAndServersView(close) }, disabled = stopped)
       if (appPlatform == AppPlatform.ANDROID) {
@@ -126,16 +113,6 @@ fun SettingsLayout(
       AppVersionItem(showVersion)
     }
 
-    if (crowdfundingAvailable()) {
-      SectionDividerSpaced()
-      SectionView(stringResource(MR.strings.v7_0_invest)) {
-        SettingsActionItem(
-          painterResource(MR.images.ic_redeem),
-          stringResource(MR.strings.v7_0_crowdfunding),
-          { ModalManager.start.showModalCloseable(cardScreen = true) { close -> GetStakeView(fromSettings = true, close = close) } }
-        )
-      }
-    }
     SectionBottomSpacer()
   }
 }
@@ -149,33 +126,36 @@ fun HelpAndSupportView(
   val uriHandler = LocalUriHandler.current
   val stopped = chatModel.chatRunning.value == false
   val userDisplayName = chatModel.currentUser.value?.displayName ?: ""
+
   ColumnWithScrollBar {
     AppBarTitle(stringResource(MR.strings.help_and_support))
 
     SectionView(stringResource(MR.strings.settings_section_title_help)) {
-      SettingsActionItem(painterResource(MR.images.ic_help), stringResource(MR.strings.how_to_use_simplex_chat), showModal { HelpView(userDisplayName) }, disabled = stopped)
-      SettingsActionItem(painterResource(MR.images.ic_add), stringResource(MR.strings.whats_new), showCustomModal { _, close -> WhatsNewView(viaSettings = true, close = close) }, disabled = stopped)
-      SettingsActionItem(painterResource(MR.images.ic_info), stringResource(MR.strings.about_simplex_chat), showModal { SimpleXInfo(it, onboarding = false) })
+      SettingsActionItem(
+        painterResource(MR.images.ic_help),
+        stringResource(MR.strings.how_to_use_simplex_chat),
+        showModal { HelpView(userDisplayName) },
+        disabled = stopped
+      )
     }
+
     SectionDividerSpaced()
 
     SectionView(stringResource(MR.strings.settings_section_title_contact)) {
-      if (!chatModel.desktopNoUserNoRemote) {
-        SettingsActionItem(painterResource(MR.images.ic_tag), stringResource(MR.strings.chat_with_the_founder), { uriHandler.openVerifiedSimplexUri(simplexTeamUri) }, textColor = MaterialTheme.colors.primary, disabled = stopped)
-      }
-      SettingsActionItem(painterResource(MR.images.ic_mail), stringResource(MR.strings.send_us_an_email), { uriHandler.openUriCatching("mailto:chat@simplex.chat") }, textColor = MaterialTheme.colors.primary)
+      SettingsActionItem(
+        painterResource(MR.images.ic_mail),
+        stringResource(MR.strings.send_us_an_email),
+        { uriHandler.openUriCatching("mailto:alexdielart@gmail.com") },
+        textColor = MaterialTheme.colors.primary
+      )
     }
+
     SectionDividerSpaced()
 
     SectionView(stringResource(MR.strings.settings_section_title_support_project)) {
-      if (!platform.androidIsPlayStoreBuild) {
-        ContributeItem(uriHandler)
-      }
-      if (appPlatform.isAndroid) {
-        RateAppItem(uriHandler)
-      }
       StarOnGithubItem(uriHandler)
     }
+
     SectionBottomSpacer()
   }
 }
@@ -277,7 +257,7 @@ fun ChatLockItem(
 }
 
 @Composable fun StarOnGithubItem(uriHandler: UriHandler) {
-  SectionItemView({ uriHandler.openExternalLink("https://github.com/simplex-chat/simplex-chat") }) {
+  SectionItemView({ uriHandler.openExternalLink("https://github.com/alexdielart/simplex-chat") }) {
     Icon(
       painter = painterResource(MR.images.ic_github),
       contentDescription = "GitHub",
@@ -348,7 +328,8 @@ fun AppVersionItem(showVersion: () -> Unit) {
 }
 
 @Composable fun AppVersionText() {
-  Text(appVersionInfo.first + (if (appVersionInfo.second != null) " (" + appVersionInfo.second + ")" else ""))
+  val prefix = if (appPlatform == AppPlatform.ANDROID) "UITP Connect " else ""
+  Text(prefix + appVersionInfo.first + (if (appVersionInfo.second != null) " (" + appVersionInfo.second + ")" else ""))
 }
 
 @Composable fun ProfilePreview(profileOf: NamedChat, size: Dp = 60.dp, iconColor: Color = MaterialTheme.colors.secondaryVariant, textColor: Color = MaterialTheme.colors.onBackground, stopped: Boolean = false, badge: LocalBadge? = null) {
