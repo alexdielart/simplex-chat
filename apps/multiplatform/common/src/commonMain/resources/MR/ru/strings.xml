@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SimpleX</string>
+    <string name="app_name">UITP Connect</string>
     <string name="thousand_abbreviation">т</string>
     <!-- Connect via Link - MainActivity.kt -->
     <string name="connect_via_contact_link">Соединиться через адрес?</string>
@@ -84,7 +84,7 @@
     <string name="icon_descr_instant_notifications">Мгновенные уведомления</string>
     <string name="service_notifications">Мгновенные уведомления!</string>
     <string name="service_notifications_disabled">Мгновенные уведомления выключены!</string>
-    <string name="to_preserve_privacy_simplex_has_background_service_instead_of_push_notifications_it_uses_a_few_pc_battery"><![CDATA[Чтобы улучшить конфиденциальность, <b>SimpleX выполняется в фоне</b> вместо уведомлений через сервер.]]></string>
+    <string name="to_preserve_privacy_simplex_has_background_service_instead_of_push_notifications_it_uses_a_few_pc_battery"><![CDATA[Чтобы улучшить конфиденциальность, <b>UITP Connect выполняется в фоне</b> вместо уведомлений через сервер.]]></string>
     <string name="it_can_disabled_via_settings_notifications_still_shown"><![CDATA[<b>Он может быть выключен через Настройки</b> - Вы продолжите получать уведомления о сообщениях пока приложение запущено.]]></string>
     <string name="turn_off_battery_optimization"><![CDATA[<b>Разрешите это</b> в следующем окне, чтобы получать уведомления мгновенно.]]></string>
     <string name="turning_off_service_and_periodic">Оптимизация батареи включена, поэтому сервис уведомлений выключен. Вы можете снова включить его через Настройки.</string>
@@ -96,12 +96,12 @@
     <string name="database_initialization_error_title">Ошибка базы данных</string>
     <string name="database_initialization_error_desc">Ошибка при инициализации базы данных. Нажмите чтобы узнать больше</string>
     <!-- SimpleX Chat foreground Service -->
-    <string name="simplex_service_notification_title">SimpleX Chat сервис</string>
+    <string name="simplex_service_notification_title">UITP Connect сервис</string>
     <string name="simplex_service_notification_text">Приём сообщений…</string>
     <string name="hide_notification">Скрыть</string>
     <!-- Notification channels -->
-    <string name="ntf_channel_messages">SimpleX Chat сообщения</string>
-    <string name="ntf_channel_calls">SimpleX Chat звонки</string>
+    <string name="ntf_channel_messages">UITP Connect сообщения</string>
+    <string name="ntf_channel_calls">UITP Connect звонки</string>
     <!-- Notifications -->
     <string name="settings_notifications_mode_title">Сервис уведомлений</string>
     <string name="settings_notification_preview_mode_title">Показывать уведомления</string>
@@ -123,21 +123,21 @@
     <string name="notification_new_contact_request">Новый запрос на соединение</string>
     <string name="notification_contact_connected">Соединен(а)</string>
     <!-- local authentication notice - SimpleXAPI.kt -->
-    <string name="la_notice_title_simplex_lock">Блокировка SimpleX</string>
-    <string name="la_notice_to_protect_your_information_turn_on_simplex_lock_you_will_be_prompted_to_complete_authentication_before_this_feature_is_enabled">Чтобы защитить Вашу информацию, включите блокировку SimpleX Chat.
+    <string name="la_notice_title_simplex_lock">Блокировка UITP Connect</string>
+    <string name="la_notice_to_protect_your_information_turn_on_simplex_lock_you_will_be_prompted_to_complete_authentication_before_this_feature_is_enabled">Чтобы защитить Вашу информацию, включите блокировку UITP Connect.
 \nВам будет нужно пройти аутентификацию для включения блокировки.</string>
     <string name="la_notice_turn_on">Включить</string>
     <!-- LocalAuthentication.kt -->
-    <string name="auth_simplex_lock_turned_on">Блокировка SimpleX включена</string>
+    <string name="auth_simplex_lock_turned_on">Блокировка UITP Connect включена</string>
     <string name="auth_you_will_be_required_to_authenticate_when_you_start_or_resume">Вы будете аутентифицированы при запуске и возобновлении приложения, которое было 30 секунд в фоновом режиме.</string>
     <string name="auth_unlock">Разблокировать</string>
     <string name="auth_log_in_using_credential">Пройдите аутентификацию</string>
-    <string name="auth_enable_simplex_lock">Включить блокировку SimpleX</string>
-    <string name="auth_disable_simplex_lock">Отключить блокировку SimpleX</string>
+    <string name="auth_enable_simplex_lock">Включить блокировку UITP Connect</string>
+    <string name="auth_disable_simplex_lock">Отключить блокировку UITP Connect</string>
     <string name="auth_confirm_credential">Пройдите аутентификацию</string>
     <string name="auth_unavailable">Аутентификация недоступна</string>
-    <string name="auth_device_authentication_is_not_enabled_you_can_turn_on_in_settings_once_enabled">Аутентификация устройства не включена. Вы можете включить блокировку SimpleX в Настройках после включения аутентификации.</string>
-    <string name="auth_device_authentication_is_disabled_turning_off">Аутентификация устройства выключена. Отключение блокировки SimpleX Chat.</string>
+    <string name="auth_device_authentication_is_not_enabled_you_can_turn_on_in_settings_once_enabled">Аутентификация устройства не включена. Вы можете включить блокировку UITP Connect в Настройках после включения аутентификации.</string>
+    <string name="auth_device_authentication_is_disabled_turning_off">Аутентификация устройства выключена. Отключение блокировки UITP Connect.</string>
     <string name="auth_stop_chat">Остановить чат</string>
     <string name="auth_open_chat_console">Открыть консоль</string>
     <!-- Chat Alerts - ChatItemView.kt -->
@@ -250,7 +250,7 @@
     <string name="gallery_video_button">Видео</string>
     <string name="choose_file">Файл</string>
     <!-- help - ChatHelpView.kt -->
-    <string name="thank_you_for_installing_simplex">Спасибо, что установили SimpleX Chat!</string>
+    <string name="thank_you_for_installing_simplex">Спасибо, что установили UITP Connect!</string>
     <string name="you_can_connect_to_simplex_chat_founder"><![CDATA[Вы можете <font color="#0088ff">соединиться с разработчиками</font>, чтобы задать любые вопросы или получать уведомления о новых версиях.]]></string>
     <string name="to_start_a_new_chat_help_header">Чтобы начать новый чат</string>
     <string name="chat_help_tap_button">Нажмите кнопку</string>
@@ -330,7 +330,7 @@
     <string name="markdown_in_messages">Форматирование сообщений</string>
     <string name="chat_with_the_founder">Вопросы и предложения</string>
     <string name="send_us_an_email">Написать нам письмо</string>
-    <string name="chat_lock">Блокировка SimpleX</string>
+    <string name="chat_lock">Блокировка UITP Connect</string>
     <string name="chat_console">Консоль</string>
     <string name="smp_servers_preset_address">Адрес сервера по умолчанию</string>
     <string name="smp_servers_add">Добавить сервер</string>
@@ -467,7 +467,7 @@
     <string name="relay_server_protects_ip">Релей-сервер защищает Ваш IP-адрес, но может отслеживать продолжительность звонка.</string>
     <string name="relay_server_if_necessary">Релей-сервер используется только при необходимости. Другая сторона может видеть Ваш IP-адрес.</string>
     <!-- Call Lock Screen -->
-    <string name="open_simplex_chat_to_accept_call">Откройте SimpleX Chat\nчтобы принять звонок</string>
+    <string name="open_simplex_chat_to_accept_call">Откройте UITP Connect\nчтобы принять звонок</string>
     <string name="allow_accepting_calls_from_lock_screen">Вы можете разрешить принимать звонки на экране блокировки через Настройки.</string>
     <string name="open_verb">Открыть</string>
     <!-- Call overlay -->
@@ -1056,7 +1056,7 @@
     <string name="la_auth_failed">Ошибка аутентификации</string>
     <string name="la_no_app_password">Нет кода доступа</string>
     <string name="la_lock_mode_passcode">Ввод кода доступа</string>
-    <string name="la_lock_mode">Режим Блокировки SimpleX</string>
+    <string name="la_lock_mode">Режим Блокировки UITP Connect</string>
     <string name="la_lock_mode_system">Системная аутентификация</string>
     <string name="la_could_not_be_verified">Ошибка аутентификации; попробуйте ещё раз.</string>
     <string name="la_immediately">Сразу</string>
@@ -1075,7 +1075,7 @@
     <string name="la_seconds">%d секунд</string>
     <string name="alert_text_decryption_error_n_messages_failed_to_decrypt">%1$d сообщений не удалось расшифровать.</string>
     <string name="decryption_error">Ошибка расшифровки</string>
-    <string name="lock_not_enabled">Блокировка SimpleX не включена!</string>
+    <string name="lock_not_enabled">Блокировка UITP Connect не включена!</string>
     <string name="alert_title_msg_bad_hash">Ошибка хэша сообщения</string>
     <string name="alert_text_msg_bad_hash">Хэш предыдущего сообщения отличается</string>
     <string name="confirm_passcode">Подтвердить код</string>
@@ -1122,7 +1122,7 @@
     <string name="la_please_remember_to_store_password">Пожалуйста, запомните или сохраните его - восстановить потерянный код доступа невозможно!</string>
     <string name="revoke_file__action">Отозвать файл</string>
     <string name="stop_rcv_file__title">Остановить приём файла\?</string>
-    <string name="you_can_turn_on_lock">Вы можете включить Блокировку SimpleX через Настройки.</string>
+    <string name="you_can_turn_on_lock">Вы можете включить Блокировку UITP Connect через Настройки.</string>
     <string name="only_you_can_add_message_reactions">Только Вы можете добавлять реакции на сообщения.</string>
     <string name="both_you_and_your_contact_can_add_message_reactions">И Вы, и Ваш контакт можете добавлять реакции на сообщения.</string>
     <string name="one_time_link_short">Одноразовая ссылка</string>
@@ -1335,7 +1335,7 @@
     <string name="turn_off_battery_optimization_button">Разрешить</string>
     <string name="turn_off_system_restriction_button">Открыть настройки приложения</string>
     <string name="disable_notifications_button">Выключить уведомления</string>
-    <string name="system_restricted_background_desc">SimpleX не может выполняться в фоне. Вы получите уведомления только когда приложение запущено.</string>
+    <string name="system_restricted_background_desc">UITP Connect не может выполняться в фоне. Вы получите уведомления только когда приложение запущено.</string>
     <string name="system_restricted_background_in_call_title">Звонки в фоне невозможны</string>
     <string name="system_restricted_background_in_call_desc">Приложение может быть выключено после 1 минуты в фоне.</string>
     <string name="no_info_on_delivery">Нет информации от доставке</string>
