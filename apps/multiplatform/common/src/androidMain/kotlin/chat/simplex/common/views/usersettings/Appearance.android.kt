@@ -123,35 +123,6 @@ fun AppearanceScope.AppearanceLayout(
     MessageShapeSection()
 
     SectionDividerSpaced()
-    ProfileImageSection()
-
-    SectionDividerSpaced()
-
-    SectionView(stringResource(MR.strings.settings_section_title_icon), contentPadding = PaddingValues(horizontal = DEFAULT_PADDING_HALF, vertical = DEFAULT_PADDING_HALF)) {
-      LazyRow {
-        items(AppIcon.values().size, { index -> AppIcon.values()[index] }) { index ->
-          val item = AppIcon.values()[index]
-          Image(
-            painterResource(item.image),
-            contentDescription = "",
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-              .border(1.dp, color = if (item == icon.value) colors.secondaryVariant else Color.Transparent, RoundedCornerShape(percent = 22))
-              .clip(RoundedCornerShape(percent = 22))
-              .size(70.dp)
-              .clickable { changeIcon(item) }
-              .padding(10.dp)
-              .clip(CircleShape)
-          )
-
-          if (index + 1 != AppIcon.values().size) {
-            Spacer(Modifier.padding(horizontal = 4.dp))
-          }
-        }
-      }
-    }
-
-    SectionDividerSpaced()
     FontScaleSection()
 
     SectionBottomSpacer()
