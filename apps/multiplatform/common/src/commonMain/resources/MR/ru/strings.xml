@@ -37,11 +37,11 @@
     <string name="description_via_one_time_link">через одноразовую ссылку</string>
     <string name="description_via_one_time_link_incognito">инкогнито через одноразовую ссылку</string>
     <!-- FormattedText, SimpleX links - ChatModel.kt -->
-    <string name="simplex_link_contact">SimpleX ссылка-контакт</string>
-    <string name="simplex_link_invitation">SimpleX одноразовая ссылка</string>
-    <string name="simplex_link_group">SimpleX ссылка группы</string>
+    <string name="simplex_link_contact">Контактная ссылка UITP Connect</string>
+    <string name="simplex_link_invitation">Одноразовая ссылка UITP Connect</string>
+    <string name="simplex_link_group">Ссылка на группу UITP Connect</string>
     <string name="simplex_link_connection">через %1$s</string>
-    <string name="simplex_link_mode">Ссылки SimpleX</string>
+    <string name="simplex_link_mode">Ссылки UITP Connect</string>
     <string name="simplex_link_mode_description">Описание</string>
     <string name="simplex_link_mode_full">Полная ссылка</string>
     <string name="simplex_link_mode_browser">В браузере</string>
@@ -256,7 +256,7 @@
     <string name="chat_help_tap_button">Нажмите кнопку</string>
     <string name="above_then_preposition_continuation">сверху, затем:</string>
     <string name="to_connect_via_link_title">Чтобы соединиться через ссылку</string>
-    <string name="if_you_received_simplex_invitation_link_you_can_open_in_browser">Если Вы получили ссылку с приглашением из SimpleX Chat, Вы можете открыть её в браузере:</string>
+    <string name="if_you_received_simplex_invitation_link_you_can_open_in_browser">Если вы получили ссылку-приглашение в UITP Connect, её можно открыть в браузере:</string>
     <string name="desktop_scan_QR_code_from_app_via_scan_QR_code"><![CDATA[💻 на компьютере: сосканируйте показанный QR-код из приложения через <b>Сканировать QR-код</b>.]]></string>
     <string name="mobile_tap_open_in_mobile_app_then_tap_connect_in_app"><![CDATA[📱 на мобильном: нажмите кнопку <b>Open in mobile app</b> на веб странице, затем нажмите <b>Соединиться</b> в приложении.]]></string>
     <!-- Contact Request Alert Dialogue - CharListNavLinkView.kt -->
@@ -300,7 +300,7 @@
     <string name="icon_descr_cancel_link_preview">удалить превью ссылки</string>
     <string name="icon_descr_settings">Настройки</string>
     <string name="image_descr_qr_code">QR-код</string>
-    <string name="icon_descr_address">Адрес SimpleX</string>
+    <string name="icon_descr_address">Адрес UITP Connect</string>
     <string name="icon_descr_help">помощь</string>
     <string name="icon_descr_simplex_team">SimpleX команда</string>
     <string name="image_descr_simplex_logo">SimpleX логотип</string>
@@ -322,7 +322,7 @@
     <string name="one_time_link">Одноразовая ссылка</string>
     <!-- settings - SettingsView.kt -->
     <string name="your_settings">Настройки</string>
-    <string name="your_simplex_contact_address">Ваш адрес SimpleX</string>
+    <string name="your_simplex_contact_address">Ваш адрес UITP Connect</string>
     <string name="database_passphrase_and_export">Пароль и экспорт базы</string>
     <string name="about_simplex_chat">Информация о SimpleX Chat</string>
     <string name="how_to_use_simplex_chat">Как использовать</string>
@@ -389,7 +389,7 @@
     <string name="display_name__field">Имя профиля:</string>
     <string name="full_name__field">Полное имя:</string>
     <string name="your_current_profile">Ваш активный профиль</string>
-    <string name="your_profile_is_stored_on_device_and_shared_only_with_contacts_simplex_cannot_see_it">Ваш профиль хранится на Вашем устройстве и отправляется только Вашим контактам. Серверы SimpleX не могут получить доступ к Вашему профилю.</string>
+    <string name="your_profile_is_stored_on_device_and_shared_only_with_contacts_simplex_cannot_see_it">Ваш профиль хранится на вашем устройстве и передаётся только вашим контактам. Серверы доставки сообщений не имеют доступа к его содержимому.</string>
     <string name="edit_image">Поменять аватар</string>
     <string name="delete_image">Удалить аватар</string>
     <string name="save_preferences_question">Сохранить предпочтения?</string>
@@ -1126,7 +1126,7 @@
     <string name="only_you_can_add_message_reactions">Только Вы можете добавлять реакции на сообщения.</string>
     <string name="both_you_and_your_contact_can_add_message_reactions">И Вы, и Ваш контакт можете добавлять реакции на сообщения.</string>
     <string name="one_time_link_short">Одноразовая ссылка</string>
-    <string name="simplex_address">Адрес SimpleX</string>
+    <string name="simplex_address">Адрес UITP Connect</string>
     <string name="enabled_self_destruct_passcode">Включить код самоуничтожения</string>
     <string name="all_app_data_will_be_cleared">Все данные приложения будут удалены.</string>
     <string name="if_you_enter_self_destruct_code">Если Вы введёте код самоуничтожения при открытии приложения:</string>
@@ -1143,7 +1143,7 @@
     <string name="send_disappearing_message_custom_time">Пользовательское время</string>
     <string name="send_disappearing_message_send">Отправить</string>
     <string name="invite_friends">Пригласить друзей</string>
-    <string name="save_auto_accept_settings">Сохранить настройки адреса SimpleX</string>
+    <string name="save_auto_accept_settings">Сохранить настройки адреса UITP Connect</string>
     <string name="change_self_destruct_mode">Изменить режим самоуничтожения</string>
     <string name="change_self_destruct_passcode">Изменить код самоуничтожения</string>
     <string name="self_destruct">Самоуничтожение</string>
@@ -1176,9 +1176,9 @@
     <string name="prohibit_message_reactions_group">Запретить реакции на сообщения.</string>
     <string name="custom_time_unit_seconds">секунд</string>
     <string name="theme_colors_section_title">Цвета интерфейса</string>
-    <string name="share_address_with_contacts_question">Поделиться адресом с контактами SimpleX?</string>
-    <string name="profile_update_will_be_sent_to_contacts">Обновление профиля будет отправлено Вашим SimpleX контактам.</string>
-    <string name="learn_more_about_address">Об адресе SimpleX</string>
+    <string name="share_address_with_contacts_question">Поделиться адресом с контактами UITP Connect?</string>
+    <string name="profile_update_will_be_sent_to_contacts">Обновление профиля будет отправлено вашим контактам UITP Connect.</string>
+    <string name="learn_more_about_address">Об адресе UITP Connect</string>
     <string name="learn_more">Узнать больше</string>
     <string name="if_you_cant_meet_in_person">Если Вы не можете встретиться лично, покажите QR-код во время видеозвонка или поделитесь ссылкой.</string>
     <string name="scan_qr_to_connect_to_contact">Чтобы соединиться с Вами, Ваш контакт может отсканировать QR-код или использовать ссылку в приложении.</string>
@@ -1187,9 +1187,9 @@
     <string name="your_contacts_will_remain_connected">Ваши контакты сохранятся.</string>
     <string name="customize_theme_title">Настроить тему</string>
     <string name="all_your_contacts_will_remain_connected_update_sent">Все Ваши контакты сохранятся. Обновлённый профиль будет отправлен Вашим контактам.</string>
-    <string name="add_address_to_your_profile">Добавьте адрес в свой профиль, чтобы Ваши SimpleX контакты могли поделиться им. Профиль будет отправлен Вашим SimpleX контактам.</string>
-    <string name="create_simplex_address">Создать адрес SimpleX</string>
-    <string name="share_with_contacts">Поделиться с контактами SimpleX</string>
+    <string name="add_address_to_your_profile">Добавьте адрес в свой профиль, чтобы ваши контакты UITP Connect могли поделиться им. Профиль будет отправлен вашим контактам UITP Connect.</string>
+    <string name="create_simplex_address">Создать адрес UITP Connect</string>
+    <string name="share_with_contacts">Поделиться с контактами UITP Connect</string>
     <string name="stop_sharing_address">Прекратить делиться адресом\?</string>
     <string name="auto_accept_contact">Автоприём</string>
     <string name="enter_welcome_message_optional">Введите приветственное сообщение... (опционально)</string>
@@ -1244,8 +1244,8 @@
     <string name="error_loading_details">Ошибка загрузки информации</string>
     <string name="error_setting_address">Ошибка установки адреса</string>
     <string name="email_invite_body">Привет!
-\nСвяжитесь со мной через SimpleX Chat: %s</string>
-    <string name="email_invite_subject">Давайте поговорим в SimpleX Chat</string>
+\nСвяжитесь со мной через UITP Connect: %s</string>
+    <string name="email_invite_subject">Давайте поговорим в UITP Connect</string>
     <string name="opening_database">Открытие базы данных…</string>
     <string name="info_row_updated_at">Запись обновлена</string>
     <string name="non_fatal_errors_occured_during_import">Во время импорта произошли некоторые ошибки:</string>
@@ -1494,7 +1494,7 @@
     <string name="contact_tap_to_connect">Нажмите, чтобы соединиться</string>
     <string name="this_device_name">Имя этого устройства</string>
     <string name="connect_plan_you_are_already_in_group_vName"><![CDATA[Вы уже состоите в группе <b>%1$s</b>.]]></string>
-    <string name="connect_plan_this_is_your_own_simplex_address">Это ваш собственный адрес SimpleX!</string>
+    <string name="connect_plan_this_is_your_own_simplex_address">Это ваш собственный адрес UITP Connect!</string>
     <string name="unblock_member_question">Разблокировать члена группы?</string>
     <string name="settings_section_title_use_from_desktop">Использовать с компьютера</string>
     <string name="session_code">Код сессии</string>
@@ -1559,8 +1559,8 @@
     <string name="error_creating_message">Ошибка создания сообщения</string>
     <string name="error_deleting_note_folder">Ошибка удаления заметки</string>
     <string name="v5_5_new_interface_languages">Венгерский и Турецкий интерфейс</string>
-    <string name="search_or_paste_simplex_link">Искать или вставить ссылку SimpleX</string>
-    <string name="code_you_scanned_is_not_simplex_link_qr_code">Этот QR-код не является SimpleX-ccылкой.</string>
+    <string name="search_or_paste_simplex_link">Искать или вставить ссылку UITP Connect</string>
+    <string name="code_you_scanned_is_not_simplex_link_qr_code">Этот QR-код не содержит ссылки для соединения.</string>
     <string name="v5_5_private_notes_descr">С зашифрованными файлами и медиа.</string>
     <string name="v5_5_message_delivery_descr">С уменьшенным потреблением батареи.</string>
     <string name="keep_unused_invitation_question">Оставить неиспользованное приглашение?</string>
@@ -1588,7 +1588,7 @@
 \nРекомендовано перезапустить приложение.</string>
     <string name="failed_to_create_user_invalid_title">Ошибка имени!</string>
     <string name="failed_to_create_user_invalid_desc">Ошибка имени профиля. Пожалуйста, выберите другое имя.</string>
-    <string name="the_text_you_pasted_is_not_a_link">Вставленный текст не является SimpleX-ссылкой.</string>
+    <string name="the_text_you_pasted_is_not_a_link">Вставленный текст не содержит ссылки для соединения.</string>
     <string name="creating_link">Создаётся ссылка…</string>
     <string name="tap_to_paste_link">Нажмите, чтобы вставить ссылку</string>
     <string name="invalid_qr_code">Ошибка QR-кода</string>
@@ -1746,12 +1746,12 @@
     <string name="recipients_can_not_see_who_message_from">Получатели не видят от кого это сообщение.</string>
     <string name="forwarded_description">переслано</string>
     <string name="files_and_media_not_allowed">Файлы и медиа не разрешены</string>
-    <string name="simplex_links_not_allowed">Ссылки SimpleX не разрешены</string>
+    <string name="simplex_links_not_allowed">Ссылки для соединения не разрешены</string>
     <string name="voice_messages_not_allowed">Голосовые сообщения не разрешены</string>
-    <string name="simplex_links">Ссылки SimpleX</string>
-    <string name="allow_to_send_simplex_links">Разрешить отправлять ссылки SimpleX.</string>
-    <string name="prohibit_sending_simplex_links">Запретить отправку ссылок SimpleX</string>
-    <string name="group_members_can_send_simplex_links">Члены группы могут отправлять ссылки SimpleX.</string>
+    <string name="simplex_links">Ссылки для соединения</string>
+    <string name="allow_to_send_simplex_links">Разрешить отправку ссылок для соединения.</string>
+    <string name="prohibit_sending_simplex_links">Запретить отправку ссылок для соединения</string>
+    <string name="group_members_can_send_simplex_links">Участники группы могут отправлять ссылки для соединения.</string>
     <string name="feature_roles_admins">админы</string>
     <string name="feature_roles_all_members">все члены</string>
     <string name="feature_roles_owners">владельцы</string>
@@ -1761,7 +1761,7 @@
     <string name="feature_enabled_for">Включено для</string>
     <string name="forward_chat_item">Переслать</string>
     <string name="v5_7_forward">Переслать и сохранить сообщение</string>
-    <string name="simplex_links_are_prohibited_in_group">Ссылки SimpleX запрещены в этой группе.</string>
+    <string name="simplex_links_are_prohibited_in_group">Ссылки для соединения запрещены в этой группе.</string>
     <string name="forward_message">Переслать сообщение…</string>
     <string name="v5_7_new_interface_languages">Литовский интерфейс</string>
     <string name="v5_7_forward_descr">Источник сообщения остаётся конфиденциальным.</string>
@@ -2079,7 +2079,7 @@
     <string name="forward_files_not_accepted_receive_files">Загрузить</string>
     <string name="forward_files_messages_deleted_after_selection_title">%1$s сообщений не переслано</string>
     <string name="forward_multiple">Переслать сообщения…</string>
-    <string name="error_parsing_uri_desc">Проверьте правильность ссылки SimpleX.</string>
+    <string name="error_parsing_uri_desc">Проверьте правильность ссылки для соединения.</string>
     <string name="error_parsing_uri_title">Ошибка ссылки</string>
     <string name="settings_section_title_chat_database">База данных</string>
     <string name="error_initializing_web_view_wrong_arch">Ошибка инициализации WebView. Убедитесь, что у вас установлен WebView и его поддерживаемая архитектура - arm64.\nОшибка: %s</string>
@@ -2163,14 +2163,14 @@
     <string name="maximum_message_size_reached_forwarding">Чтобы отправить сообщение, скопируйте и уменьшите его размер.</string>
     <string name="share_1_time_link_with_a_friend">Поделитесь одноразовой ссылкой с другом</string>
     <string name="share_address_publicly">Поделитесь адресом</string>
-    <string name="share_simplex_address_on_social_media">Поделитесь SimpleX адресом в социальных сетях.</string>
-    <string name="simplex_address_and_1_time_links_are_safe_to_share">Адрес SimpleX и одноразовые ссылки безопасно отправлять через любой мессенджер.</string>
+    <string name="share_simplex_address_on_social_media">Поделитесь адресом UITP Connect в социальных сетях.</string>
+    <string name="simplex_address_and_1_time_links_are_safe_to_share">Адрес UITP Connect и одноразовые ссылки безопасно отправлять через любой мессенджер.</string>
     <string name="you_can_set_connection_name_to_remember">Вы можете установить имя соединения, чтобы запомнить кому Вы отправили ссылку.</string>
     <string name="smp_servers_new_server">Новый сервер</string>
     <string name="create_1_time_link">Создать одноразовую ссылку</string>
     <string name="for_social_media">Для социальных сетей</string>
     <string name="or_to_share_privately">Или поделиться конфиденциально</string>
-    <string name="simplex_address_or_1_time_link">Адрес SimpleX или одноразовая ссылка?</string>
+    <string name="simplex_address_or_1_time_link">Адрес UITP Connect или одноразовая ссылка?</string>
     <string name="address_settings">Настройки адреса</string>
     <string name="add_your_team_members_to_conversations">Добавьте сотрудников в разговор.</string>
     <string name="business_address">Бизнес-адрес</string>
@@ -2428,7 +2428,7 @@
     <string name="support_chat">Чат с админами</string>
     <string name="rcv_group_event_user_accepted">Вы приняты</string>
     <string name="group_new_support_chat_one">1 чат с членом группы</string>
-    <string name="simplex_link_channel">SimpleX ссылка канала</string>
+    <string name="simplex_link_channel">Ссылка на канал UITP Connect</string>
     <string name="add_short_link">Обновить адрес</string>
     <string name="accept_contact_request">Принять запрос на соединение</string>
     <string name="compose_view_add_message">Добавить сообщение</string>
@@ -2494,7 +2494,7 @@
     <string name="share_old_address_alert_button">Поделиться старым адресом</string>
     <string name="share_old_link_alert_button">Поделиться старой ссылкой</string>
     <string name="v6_4_1_short_address_share">Поделитесь Вашим адресом</string>
-    <string name="v6_4_1_short_address">Короткий адрес SimpleX</string>
+    <string name="v6_4_1_short_address">Короткий адрес UITP Connect</string>
     <string name="chat_banner_connect_to_chat">Нажмите Соединиться</string>
     <string name="chat_banner_send_request_to_connect">Нажмите Соединиться, чтобы отправить запрос</string>
     <string name="chat_banner_join_group">Нажмите Вступить в группу</string>
@@ -2645,7 +2645,7 @@
     <string name="save_and_notify_channel_subscribers">Сохранить и уведомить подписчиков канала</string>
     <string name="save_channel_profile">Сохранить профиль канала</string>
     <string name="link_previews_alert_desc">Отправка картинки ссылки может раскрыть Ваш IP-адрес веб-сайту. Вы можете изменить это в настройках безопасности позже.</string>
-    <string name="onboarding_send_1_time_link">Отправьте ссылку через любой мессенджер - это безопасно. Попросите вставить её в SimpleX.</string>
+    <string name="onboarding_send_1_time_link">Отправьте ссылку через любой мессенджер - это безопасно. Попросите вставить её в UITP Connect.</string>
     <string name="error_relay_test_server_auth">Для подключения к релею требуется авторизация, проверьте пароль.</string>
     <string name="server_warning">Предупреждение сервера</string>
     <string name="share_channel">Поделиться каналом…</string>
@@ -2740,7 +2740,7 @@
     <string name="group_members_can_add_message_reactions_channel">Подписчики могут добавлять реакции на сообщения.</string>
     <string name="group_members_can_send_voice_channel">Подписчики могут отправлять голосовые сообщения.</string>
     <string name="group_members_can_send_files_channel">Подписчики могут отправлять файлы и медиа.</string>
-    <string name="group_members_can_send_simplex_links_channel">Подписчики могут отправлять ссылки SimpleX.</string>
+    <string name="group_members_can_send_simplex_links_channel">Подписчики могут отправлять ссылки для соединения.</string>
     <string name="group_members_can_send_reports_channel">Подписчики могут отправлять сообщения о нарушениях модераторам.</string>
     <string name="recent_history_is_sent_to_new_members_channel">До 100 последних сообщений отправляется новым подписчикам.</string>
     <string name="recent_history_is_not_sent_to_new_members_channel">История не отправляется новым подписчикам.</string>
