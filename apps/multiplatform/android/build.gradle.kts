@@ -98,31 +98,9 @@ android {
     // Comma separated list of languages that will be included in the apk
     android.defaultConfig.resourceConfigurations += listOf(
         "en",
-        "ar",
-        "bg",
-        "ca",
-        "cs",
-        "de",
-        "es",
-        "fa",
-        "fi",
-        "fr",
-        "hu",
-        "in",
-        "it",
-        "iw",
-        "ja",
-        "lt",
-        "nl",
-        "pl",
-        "pt-rBR",
-        "ro",
         "ru",
-        "th",
-        "tr",
-        "uk",
-        "vi",
-        "zh-rCN"
+        "es",
+        "fr"
     )
     ndkVersion = "23.1.7779620"
     if (isBundle) {

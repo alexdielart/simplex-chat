@@ -1103,31 +1103,9 @@ object AppearanceScope {
     val supportedLanguages = mapOf(
       "system" to generalGetString(MR.strings.language_system),
       "en" to "English",
-      "ar" to "العربية",
-      "bg" to "Български",
-      "ca" to "Català",
-      "cs" to "Čeština",
-      "de" to "Deutsch",
-      "es" to "Español",
-      "fa" to "فارسی",
-      "fi" to "Suomi",
-      "fr" to "Français",
-      "hu" to "Magyar",
-      "in" to "Indonesia",
-      "it" to "Italiano",
-      "iw" to "עִברִית",
-      "ja" to "日本語",
-      "lt" to "Lietuvių",
-      "nl" to "Nederlands",
-      "pl" to "Polski",
-      "pt-BR" to "Português, Brasil",
-      "ro" to "Română",
       "ru" to "Русский",
-      "th" to "ภาษาไทย",
-      "tr" to "Türkçe",
-      "uk" to "Українська",
-      "vi" to "Tiếng Việt",
-      "zh-CN" to "简体中文"
+      "es" to "Español",
+      "fr" to "Français"
     )
     val values by remember(appPrefs.appLanguage.state.value) { mutableStateOf(supportedLanguages.map { it.key to it.value }) }
     ExposedDropDownSettingRow(
