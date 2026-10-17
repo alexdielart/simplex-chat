@@ -234,6 +234,41 @@ private fun onboardingBackAction(chatModel: ChatModel, close: () -> Unit) {
 
 @Composable
 private fun CreateFirstProfileMobile(chatModel: ChatModel, close: () -> Unit) {
+  if (appPlatform.isAndroid) {
+    val displayName = rememberSaveable { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
+    CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
+      ModalView(
+        close = { onboardingBackAction(chatModel, close) },
+        showClose = false,
+        showAppBar = false
+      ) {
+        UITPProfileScreen(
+          displayName = displayName.value,
+          onDisplayNameChange = { displayName.value = it },
+          canSubmit = canCreateProfile(displayName.value),
+          onCreateProfile = {
+            if (canCreateProfile(displayName.value)) {
+              focusManager.clearFocus()
+              createProfileOnboarding(chatModel, displayName.value, close)
+            }
+          },
+          onTransfer = {
+            focusManager.clearFocus()
+            if (chatModel.migrationState.value == null) {
+              chatModel.migrationState.value = MigrationToState.PasteOrScanLink
+            }
+            ModalManager.fullscreen.showCustomModal(animated = false, forceAnimated = false) { migrationClose ->
+              MigrateToDeviceView { migrationClose() }
+            }
+          },
+          onBack = { onboardingBackAction(chatModel, close) }
+        )
+        LaunchedEffect(Unit) { setLastVersionDefault(chatModel) }
+      }
+    }
+    return
+  }
   CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
     val focusRequester = remember { FocusRequester() }
     val refocusTrigger = remember { mutableStateOf(0) }

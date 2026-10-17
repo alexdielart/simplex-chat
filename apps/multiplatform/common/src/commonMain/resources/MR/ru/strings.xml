@@ -2919,4 +2919,27 @@
     <string name="tray_show">Показать SimpleX</string>
     <string name="tray_quit">Выйти из SimpleX</string>
     <string name="tray_tooltip">SimpleX</string>
+    <string name="uitp_welcome_title">Будь свободен\nв своей сети</string>
+    <string name="uitp_welcome_description">Конфиденциальный и безопасный обмен сообщениями.</string>
+    <string name="uitp_welcome_network">Сеть, в которой вы сами владеете своими контактами и группами.</string>
+    <string name="uitp_welcome_why">Зачем создан UITP Connect</string>
+    <string name="uitp_manifest_title">Вы родились без аккаунта.</string>
+    <string name="uitp_manifest_p1">Никто не отслеживал ваши разговоры. Никто не составлял карту ваших перемещений. Конфиденциальность не была функцией — это был образ жизни.</string>
+    <string name="uitp_manifest_p2">Потом мы вышли в интернет, и каждая платформа попросила частичку вас — имя, номер телефона, ваших друзей. Мы смирились с тем, что за возможность общаться приходится отдавать информацию о том, с кем мы общаемся. Казалось, что другого пути нет.</string>
+    <string name="uitp_manifest_p3">Другой путь есть. Сеть без номеров телефонов и email. Только внутренний номер UITP, который вы даёте сами. Сеть, которая передаёт зашифрованные сообщения, не зная, кто с кем связан.</string>
+    <string name="uitp_manifest_p4">Не более надёжный замок на чужой двери. Не более вежливый хозяин, который всё равно ведёт учёт гостей.</string>
+    <string name="uitp_manifest_back">Назад</string>
+    <string name="uitp_profile_title">Ваш профиль</string>
+    <string name="uitp_profile_local">На вашем телефоне, а не на серверах.</string>
+    <string name="uitp_profile_privacy">Без номера телефона. Без email. Без аккаунта.\nТолько внутренний номер UITP.</string>
+    <string name="uitp_profile_display_name">Отображаемое имя</string>
+    <string name="uitp_profile_hint">Например, Евгений</string>
+    <string name="uitp_profile_create">Создать профиль</string>
+    <string name="uitp_profile_transfer">Перенести</string>
+    <string name="uitp_profile_back">Назад</string>
+    <string name="uitp_network_title">Ваша сеть</string>
+    <string name="uitp_network_subtitle">Серверы сети не могут знать, кто с кем общается</string>
+    <string name="uitp_network_configure_servers">Настроить серверы</string>
+    <string name="uitp_network_configure_notifications">Настроить уведомления</string>
+    <string name="uitp_network_continue">Продолжить</string>
 </resources>

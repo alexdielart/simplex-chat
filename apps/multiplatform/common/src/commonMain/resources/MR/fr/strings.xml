@@ -2844,4 +2844,27 @@
     <string name="update_app_register_simplex_domain">Mettez à jour l’application pour enregistrer un domaine SimpleX</string>
     <string name="countdown_hrs_min_sec">%1$02d h %2$02d min %3$02d s</string>
     <string name="simplex_name_sales_footer">Les investisseurs du financement participatif peuvent réserver des noms avant le début de la vente :</string>
+    <string name="uitp_welcome_title">Soyez libre\ndans votre réseau</string>
+    <string name="uitp_welcome_description">Messagerie privée et sécurisée.</string>
+    <string name="uitp_welcome_network">Un réseau où vos contacts et groupes vous appartiennent.</string>
+    <string name="uitp_welcome_why">Pourquoi UITP Connect a été créé</string>
+    <string name="uitp_manifest_title">Vous êtes né sans compte.</string>
+    <string name="uitp_manifest_p1">Personne ne suivait vos conversations. Personne ne cartographiait vos déplacements. La confidentialité n’était pas une fonctionnalité — c’était un mode de vie.</string>
+    <string name="uitp_manifest_p2">Puis nous sommes arrivés sur Internet, et chaque plateforme a demandé une partie de vous — votre nom, votre numéro de téléphone, vos amis. Nous avons accepté que communiquer implique de livrer des informations sur les personnes avec qui nous parlons. Il semblait ne pas y avoir d’autre solution.</string>
+    <string name="uitp_manifest_p3">Une autre voie existe. Un réseau sans numéro de téléphone ni adresse e-mail. Seulement un numéro UITP interne que vous choisissez de communiquer. Un réseau qui transmet des messages chiffrés sans savoir qui est lié à qui.</string>
+    <string name="uitp_manifest_p4">Pas une serrure plus solide sur la porte de quelqu’un d’autre. Pas un hôte plus poli qui tient malgré tout la liste de ses invités.</string>
+    <string name="uitp_manifest_back">Retour</string>
+    <string name="uitp_profile_title">Votre profil</string>
+    <string name="uitp_profile_local">Sur votre téléphone, pas sur les serveurs.</string>
+    <string name="uitp_profile_privacy">Sans téléphone, sans e-mail, sans compte.\nSeulement un numéro UITP interne.</string>
+    <string name="uitp_profile_display_name">Nom affiché</string>
+    <string name="uitp_profile_hint">Par exemple, Eugène</string>
+    <string name="uitp_profile_create">Créer un profil</string>
+    <string name="uitp_profile_transfer">Transférer</string>
+    <string name="uitp_profile_back">Retour</string>
+    <string name="uitp_network_title">Votre réseau</string>
+    <string name="uitp_network_subtitle">Les serveurs du réseau ne peuvent pas savoir qui parle à qui</string>
+    <string name="uitp_network_configure_servers">Configurer les serveurs</string>
+    <string name="uitp_network_configure_notifications">Configurer les notifications</string>
+    <string name="uitp_network_continue">Continuer</string>
 </resources>

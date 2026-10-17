@@ -60,6 +60,24 @@ fun YourNetworkView(chatModel: ChatModel) {
   } else {
     CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
       ModalView({}, showClose = false, showAppBar = false) {
+        if (appPlatform.isAndroid) {
+          UITPYourNetworkScreen(
+            onConfigureServers = {
+              ModalManager.fullscreen.showCustomModal { close ->
+                ChooseServerOperators(serverOperators, selectedOperatorIds, close)
+              }
+            },
+            onConfigureNotifications = {
+              ModalManager.fullscreen.showModalCloseable { close ->
+                SetNotificationsMode(notificationMode, close)
+              }
+            },
+            onContinue = {
+              changeNotificationsMode(notificationMode.value, chatModel)
+              appPrefs.onboardingStage.set(OnboardingStage.Step4_NetworkCommitments)
+            }
+          )
+        } else {
         OnboardingShrinkingLayout(
           modifier = Modifier.fillMaxSize().themedBackground(bgLayerSize = LocalAppBarHandler.current?.backgroundGraphicsLayerSize, bgLayer = LocalAppBarHandler.current?.backgroundGraphicsLayer)
             .systemBarsPadding()
@@ -127,6 +145,7 @@ fun YourNetworkView(chatModel: ChatModel) {
             }
           }
         )
+        }
       }
     }
   }

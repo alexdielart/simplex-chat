@@ -105,6 +105,10 @@ fun SimpleXInfoLayout(
   user: User?,
   onboardingStage: SharedPreference<OnboardingStage>?
 ) {
+  if (appPlatform.isAndroid && onboardingStage != null) {
+    UITPWelcomeScreen(user, onboardingStage)
+    return
+  }
   val topBar = onboardingStage == null && !appPrefs.oneHandUI.state.value
   val modifier = Modifier.fillMaxSize().systemBarsPadding().padding(horizontal = DEFAULT_ONBOARDING_HORIZONTAL_PADDING)
   Column(if (topBar) modifier.padding(top = AppBarHeight * fontSizeSqrtMultiplier) else modifier, horizontalAlignment = Alignment.CenterHorizontally) {

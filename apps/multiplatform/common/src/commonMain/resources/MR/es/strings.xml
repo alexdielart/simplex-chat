@@ -2851,4 +2851,27 @@
     <string name="update_app_register_simplex_domain">Actualiza la app para poder registrar un dominio SimpleX</string>
     <string name="countdown_hrs_min_sec">%1$02d hrs %2$02d min %3$02d seg</string>
     <string name="simplex_name_sales_footer">Los inversores de crowdfunding pueden reservar nombres antes del comienzo de la venta:</string>
+    <string name="uitp_welcome_title">Sé libre\nen tu red</string>
+    <string name="uitp_welcome_description">Mensajería privada y segura.</string>
+    <string name="uitp_welcome_network">Una red donde tus contactos y grupos te pertenecen.</string>
+    <string name="uitp_welcome_why">Por qué se creó UITP Connect</string>
+    <string name="uitp_manifest_title">Naciste sin una cuenta.</string>
+    <string name="uitp_manifest_p1">Nadie rastreaba tus conversaciones. Nadie trazaba un mapa de tus movimientos. La privacidad no era una función: era una forma de vida.</string>
+    <string name="uitp_manifest_p2">Después llegamos a Internet y cada plataforma pidió una parte de ti: tu nombre, tu número de teléfono, tus amigos. Aceptamos que, para comunicarnos, teníamos que revelar con quién hablábamos. Parecía que no había otra opción.</string>
+    <string name="uitp_manifest_p3">Hay otro camino. Una red sin números de teléfono ni correo electrónico. Solo un número interno de UITP que tú decides compartir. Una red que transmite mensajes cifrados sin saber quién está conectado con quién.</string>
+    <string name="uitp_manifest_p4">No es una cerradura más segura en la puerta de otro. Ni un anfitrión más amable que sigue llevando un registro de sus invitados.</string>
+    <string name="uitp_manifest_back">Volver</string>
+    <string name="uitp_profile_title">Tu perfil</string>
+    <string name="uitp_profile_local">En tu teléfono, no en los servidores.</string>
+    <string name="uitp_profile_privacy">Sin número de teléfono. Sin correo. Sin cuenta.\nSolo un número interno de UITP.</string>
+    <string name="uitp_profile_display_name">Nombre visible</string>
+    <string name="uitp_profile_hint">Por ejemplo, Eugenio</string>
+    <string name="uitp_profile_create">Crear perfil</string>
+    <string name="uitp_profile_transfer">Transferir</string>
+    <string name="uitp_profile_back">Volver</string>
+    <string name="uitp_network_title">Tu red</string>
+    <string name="uitp_network_subtitle">Los servidores de la red no pueden saber quién habla con quién</string>
+    <string name="uitp_network_configure_servers">Configurar servidores</string>
+    <string name="uitp_network_configure_notifications">Configurar notificaciones</string>
+    <string name="uitp_network_continue">Continuar</string>
 </resources>

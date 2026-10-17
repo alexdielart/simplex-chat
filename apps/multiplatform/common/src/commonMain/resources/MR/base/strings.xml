@@ -3228,4 +3228,27 @@
   <string name="supporter_perks">Supporter perks</string>
   <string name="v7_1_supporter_badge_title">Supporter badge ❤️</string>
   <string name="v7_1_supporter_badge_body">Help keep the network running — send files up to 2 GB.</string>
+    <string name="uitp_welcome_title">Be free\nin your network</string>
+    <string name="uitp_welcome_description">Private and secure messaging.</string>
+    <string name="uitp_welcome_network">A network where you own your contacts and groups.</string>
+    <string name="uitp_welcome_why">Why UITP Connect was created</string>
+  <string name="uitp_manifest_title">You were born without an account.</string>
+  <string name="uitp_manifest_p1">No one tracked your conversations. No one mapped your movements. Privacy wasn’t a feature — it was a way of life.</string>
+  <string name="uitp_manifest_p2">Then we went online, and every platform asked for a piece of you — your name, your phone number, your friends. We accepted that being able to communicate meant giving away information about who we talk to. It seemed there was no other way.</string>
+  <string name="uitp_manifest_p3">There is another way. A network without phone numbers or email. Just an internal UITP number that you choose to share. A network that delivers encrypted messages without knowing who is connected to whom.</string>
+  <string name="uitp_manifest_p4">Not a stronger lock on someone else’s door. Not a more polite host who still keeps a guest list.</string>
+  <string name="uitp_manifest_back">Back</string>
+  <string name="uitp_profile_title">Your profile</string>
+  <string name="uitp_profile_local">On your phone, not on servers.</string>
+  <string name="uitp_profile_privacy">No phone number. No email. No account.\nOnly an internal UITP number.</string>
+  <string name="uitp_profile_display_name">Display name</string>
+  <string name="uitp_profile_hint">e.g. Eugene</string>
+  <string name="uitp_profile_create">Create profile</string>
+  <string name="uitp_profile_transfer">Transfer</string>
+  <string name="uitp_profile_back">Back</string>
+  <string name="uitp_network_title">Your network</string>
+  <string name="uitp_network_subtitle">The network servers cannot know who communicates with whom</string>
+  <string name="uitp_network_configure_servers">Configure servers</string>
+  <string name="uitp_network_configure_notifications">Configure notifications</string>
+  <string name="uitp_network_continue">Continue</string>
 </resources>
