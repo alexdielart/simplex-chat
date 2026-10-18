@@ -1629,7 +1629,7 @@
     <string name="migrate_to_device_file_delete_or_link_invalid">Le fichier a été supprimé ou le lien est invalide</string>
     <string name="migrate_to_device_import_failed">Échec de l\'importation</string>
     <string name="invalid_file_link">Lien invalide</string>
-    <string name="migrate_to_device_title">Transférer ici</string>
+    <string name="migrate_to_device_title">Transférer le profil</string>
     <string name="migrate_to_device_migrating">Migration</string>
     <string name="or_paste_archive_link">Ou coller le lien de l\'archive</string>
     <string name="migrate_from_device_or_share_this_file_link">Ou partagez en toute sécurité le lien de ce fichier</string>

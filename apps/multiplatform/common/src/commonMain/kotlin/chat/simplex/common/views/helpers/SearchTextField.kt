@@ -71,14 +71,14 @@ fun SearchTextField(
   }
 
   val colors = TextFieldDefaults.textFieldColors(
-    backgroundColor = Color.Unspecified,
+    backgroundColor = MaterialTheme.colors.surface,
     textColor = MaterialTheme.colors.onBackground,
     focusedIndicatorColor = Color.Unspecified,
     unfocusedIndicatorColor = Color.Unspecified,
     disabledIndicatorColor = Color.Unspecified,
     placeholderColor = MaterialTheme.colors.secondary,
   )
-  val shape = MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize)
+  val shape = MaterialTheme.shapes.small
   val interactionSource = remember { MutableInteractionSource() }
   val textStyle = MaterialTheme.typography.body1.copy(color = MaterialTheme.colors.onBackground)
   // sizing is done differently on Android and desktop in order to have the same height of search and compose view on desktop

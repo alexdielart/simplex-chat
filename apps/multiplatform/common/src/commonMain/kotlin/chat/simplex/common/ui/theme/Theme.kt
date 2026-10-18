@@ -604,31 +604,21 @@ data class ThemeModeOverride (
 // formula in Section.kt). SIMPLEX: gradient bottom stop (darker), since the
 // canvas itself is a gradient drawn by themedBackgroundBrush.
 fun canvasColorForCurrentTheme(): Color {
-  val theme = CurrentColors.value
-  val c = theme.colors
-  return when (theme.base) {
-    DefaultTheme.LIGHT -> c.background.mixWith(c.onBackground, 0.94f)
-    DefaultTheme.SIMPLEX -> c.background.darker(0.4f)
-    else -> c.background
-  }
+  val colors = CurrentColors.value.colors
+  return if (colors.isLight) colors.background.mixWith(colors.onBackground, 0.94f)
+  else colors.background
 }
 
 // Card background color for SectionView. LIGHT: pure white (raised above the
 // off-white canvas). DARK/BLACK/SIMPLEX: founder's mixWith formula (lifts cards
 // above palette bg using onBackground tint).
-fun sectionCardColor(): Color {
-  val theme = CurrentColors.value
-  return if (theme.base == DefaultTheme.LIGHT) Color.White
-  else theme.colors.background.mixWith(theme.colors.onBackground, 0.95f)
-}
+fun sectionCardColor(): Color = CurrentColors.value.colors.surface
 
 fun Modifier.themedBackground(baseTheme: DefaultTheme = CurrentColors.value.base, bgLayerSize: MutableState<IntSize>?, bgLayer: GraphicsLayer?, overrideColor: Color? = null): Modifier {
   return drawBehind {
     copyBackgroundToAppBar(bgLayerSize, bgLayer) {
       if (overrideColor != null) {
         drawRect(overrideColor)
-      } else if (baseTheme == DefaultTheme.SIMPLEX) {
-        drawRect(brush = themedBackgroundBrush())
       } else {
         drawRect(CurrentColors.value.colors.background)
       }
@@ -661,94 +651,55 @@ val DEFAULT_END_MODAL_WIDTH = 388.dp
 val DEFAULT_MAX_IMAGE_WIDTH = 500.dp
 
 val DarkColorPalette = darkColors(
-  primary = SimplexBlue,  // If this value changes also need to update #0088ff in string resource files
-  primaryVariant = SimplexBlue,
-  secondary = HighOrLowlight,
-  secondaryVariant = DarkGray,
-//  background = Color.Black,
-  surface = Color(0xFF222222),
-//  background = Color(0xFF121212),
-  error = Color.Red,
-  onBackground = Color(0xFFFFFBFA),
-  onSurface = Color(0xFFFFFBFA),
-//  onError: Color = Color.Black,
+  primary = UITPColors.Purple,
+  primaryVariant = UITPColors.Link,
+  secondary = UITPColors.Secondary,
+  secondaryVariant = UITPColors.Muted,
+  background = UITPColors.Background,
+  surface = UITPColors.Surface,
+  error = UITPColors.Error,
+  onPrimary = UITPColors.Text,
+  onSecondary = UITPColors.Text,
+  onBackground = UITPColors.Text,
+  onSurface = UITPColors.Text
 )
 val DarkColorPaletteApp = AppColors(
-  title = SimplexBlue,
-  primaryVariant2 = Color(0xFF18262E),
-  sentMessage = Color(0xFF18262E),
-  sentQuote = Color(0xFF1D3847),
-  receivedMessage = Color(0xff262627),
-  receivedQuote = Color(0xff373739),
+  title = UITPColors.Text,
+  primaryVariant2 = UITPColors.Pink,
+  sentMessage = UITPColors.SentMessage,
+  sentQuote = UITPColors.SentQuote,
+  receivedMessage = UITPColors.ReceivedMessage,
+  receivedQuote = UITPColors.ReceivedQuote
 )
 
+// Light mode is a restrained UITP alternative; the HTML reference defines Dark mode.
 val LightColorPalette = lightColors(
-  primary = SimplexBlue,  // If this value changes also need to update #0088ff in string resource files
-  primaryVariant = SimplexBlue,
-  secondary = HighOrLowlight,
-  secondaryVariant = LightGray,
-  error = Color.Red,
-//  background = Color.White,
+  primary = UITPColors.Purple,
+  primaryVariant = UITPColors.Link,
+  secondary = Color(0xFF666475),
+  secondaryVariant = UITPColors.Muted,
+  background = Color(0xFFF8F7FC),
   surface = Color.White,
-//  onPrimary = Color.White,
-//  onSecondary = Color.Black,
-//  onBackground = Color.Black,
-//  onSurface = Color.Black,
+  error = Color(0xFFD62857),
+  onPrimary = Color.White,
+  onSecondary = Color.White,
+  onBackground = Color(0xFF201E2B),
+  onSurface = Color(0xFF201E2B)
 )
 val LightColorPaletteApp = AppColors(
-  title = SimplexBlue,
-  primaryVariant2 = Color(0xFFE9F7FF),
-  sentMessage = Color(0xFFE9F7FF),
-  sentQuote = Color(0xFFD6F0FF),
-  receivedMessage = Color(0xfff5f5f6),
-  receivedQuote = Color(0xffececee),
+  title = Color(0xFF201E2B),
+  primaryVariant2 = Color(0xFFF1EBFF),
+  sentMessage = Color(0xFFEEE6FF),
+  sentQuote = Color(0xFFE1D4FF),
+  receivedMessage = Color(0xFFF2F0F6),
+  receivedQuote = Color(0xFFEBE8F1)
 )
 
-val SimplexColorPalette = darkColors(
-  primary = Color(0xFF70F0F9),  // If this value changes also need to update #0088ff in string resource files
-  primaryVariant = Color(0xFF1298A5),
-  secondary = HighOrLowlight,
-  secondaryVariant = Color(0xFF2C464D),
-  background = Color(0xFF111528),
-  //  surface = Color.Black,
-  //  background = Color(0xFF121212),
-  surface = Color(0xFF121C37),
-  error = Color.Red,
-//  onBackground = Color(0xFFFFFBFA),
-//  onSurface = Color(0xFFFFFBFA),
-  //  onError: Color = Color.Black,
-)
-val SimplexColorPaletteApp = AppColors(
-  title = Color(0xFF267BE5),
-  primaryVariant2 = Color(0xFF172941),
-  sentMessage = Color(0xFF172941),
-  sentQuote = Color(0xFF1C3A57),
-  receivedMessage = Color(0xff25283a),
-  receivedQuote = Color(0xff36394a),
-)
-
-val BlackColorPalette = darkColors(
-  primary = Color(0xff0077e0),  // If this value changes also need to update #0088ff in string resource files
-  primaryVariant = Color(0xff0077e0),
-  secondary = HighOrLowlight,
-  secondaryVariant = DarkGray,
-  background = Color(0xff070707),
-  surface = Color(0xff161617),
-  //  background = Color(0xFF121212),
-  //  surface = Color(0xFF121212),
-  error = Color.Red,
-  onBackground = Color(0xFFFFFBFA),
-  onSurface = Color(0xFFFFFBFA),
-  //  onError: Color = Color.Black,
-)
-val BlackColorPaletteApp = AppColors(
-  title = Color(0xff0077e0),
-  primaryVariant2 = Color(0xff243747),
-  sentMessage = Color(0xFF18262E),
-  sentQuote = Color(0xFF1D3847),
-  receivedMessage = Color(0xff1b1b1b),
-  receivedQuote = Color(0xff29292b),
-)
+// The legacy names remain to avoid disrupting saved preferences. All dark variants use UITP colors.
+val SimplexColorPalette = DarkColorPalette.copy()
+val SimplexColorPaletteApp = DarkColorPaletteApp.copy()
+val BlackColorPalette = DarkColorPalette.copy()
+val BlackColorPaletteApp = DarkColorPaletteApp.copy()
 
 var systemInDarkThemeCurrently: Boolean = isInNightMode()
 

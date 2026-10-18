@@ -1701,7 +1701,7 @@
     <string name="migrate_from_device_archive_will_be_deleted"><![CDATA[<b>Внимание</b>: архив будет удалён.]]></string>
     <string name="migrate_to_device_confirm_network_settings">Подтвердите настройки сети</string>
     <string name="e2ee_info_pq"><![CDATA[Сообщения, файлы и звонки защищены <b>квантово-устойчивым сквозным шифрованием</b> с идеальной прямой секретностью (PFS), правдоподобным отрицанием и восстановлением от взлома.]]></string>
-    <string name="migrate_to_device_title">Мигрировать сюда</string>
+    <string name="migrate_to_device_title">Перенести профиль</string>
     <string name="migrate_from_device_to_another_device">Мигрировать на другое устройство</string>
     <string name="v5_6_app_data_migration_descr">Мигрируйте на другое устройство через QR-код.</string>
     <string name="or_paste_archive_link">Или вставьте ссылку архива</string>

@@ -1626,7 +1626,7 @@
     <string name="migrate_from_device_chat_should_be_stopped">Para continuar, UITP Connect debe estar parado.</string>
     <string name="e2ee_info_no_pq"><![CDATA[Los mensajes, archivos y llamadas están protegidos mediante <b>cifrado de extremo a extremo</b> con secreto perfecto hacia adelante, repudio y recuperación tras ataque.]]></string>
     <string name="e2ee_info_pq"><![CDATA[Los mensajes, archivos y llamadas están protegidos mediante <b>cifrado de extremo a extremo resistente a tecnología cuántica</b> con secreto perfecto hacia adelante, repudio y recuperación tras ataque.]]></string>
-    <string name="migrate_to_device_title">Migrar aquí</string>
+    <string name="migrate_to_device_title">Transferir perfil</string>
     <string name="migrate_from_device_to_another_device">Migrar a otro dispositivo</string>
     <string name="v5_6_app_data_migration_descr">Migrar a otro dispositivo mediante código QR.</string>
     <string name="auth_open_migration_to_another_device">Abrir menú migración</string>

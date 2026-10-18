@@ -17,6 +17,24 @@ expect val EmojiFont: FontFamily
 
 object ThemeManager {
   private val appPrefs: AppPreferences = ChatController.appPrefs
+  // UITP Connect default dark color scheme.
+  private val uitpDefaultDarkOverrides = ThemeOverrides(
+    base = DefaultTheme.DARK,
+    colors = ThemeColors(
+      primary = "#ff8b5cff",
+      primaryVariant = "#ffc79bff",
+      primaryVariant2 = "#ffe5479b",
+      secondary = "#ffa0a0b0",
+      secondaryVariant = "#ff7a7a88",
+      background = "#ff0b0b12",
+      surface = "#ff15151f",
+      title = "#fff2f2f5",
+      sentMessage = "#ff2e2346",
+      sentQuote = "#ff473566",
+      receivedMessage = "#ff20202b",
+      receivedQuote = "#ff30303f"
+    )
+  )
 
   data class ActiveTheme(val name: String, val base: DefaultTheme, val colors: Colors, val appColors: AppColors, val wallpaper: AppWallpaper = AppWallpaper())
 
@@ -39,7 +57,7 @@ object ThemeManager {
   fun defaultActiveTheme(appSettingsTheme: List<ThemeOverrides>): ThemeOverrides? {
     val nonSystemThemeName = nonSystemThemeName()
     val defaultThemeId = appPrefs.currentThemeIds.get()[nonSystemThemeName]
-    return appSettingsTheme.getTheme(defaultThemeId)
+    return appSettingsTheme.getTheme(defaultThemeId) ?: if (nonSystemThemeName == DefaultTheme.DARK.themeName) uitpDefaultDarkOverrides else null
   }
 
   fun defaultActiveTheme(perUserTheme: ThemeModeOverrides?, appSettingsTheme: List<ThemeOverrides>): ThemeModeOverride {

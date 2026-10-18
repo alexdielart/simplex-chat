@@ -37,14 +37,7 @@ fun AppBarTitle(
       handler?.connection?.scrollTrackingEnabled = false
     }
   }
-  val theme = CurrentColors.collectAsState()
   val titleColor = overrideTitleColor ?: MaterialTheme.appColors.title
-  val brush = if (overrideTitleColor != null)
-    Brush.linearGradient(listOf(titleColor, titleColor), Offset(0f, Float.POSITIVE_INFINITY), Offset(Float.POSITIVE_INFINITY, 0f))
-  else if (theme.value.base == DefaultTheme.SIMPLEX)
-    Brush.linearGradient(listOf(titleColor.darker(0.2f), titleColor.lighter(0.35f)), Offset(0f, Float.POSITIVE_INFINITY), Offset(Float.POSITIVE_INFINITY, 0f))
-  else
-    Brush.linearGradient(listOf(titleColor, titleColor), Offset(0f, Float.POSITIVE_INFINITY), Offset(Float.POSITIVE_INFINITY, 0f))
   Column {
     Text(
       title,
@@ -54,8 +47,8 @@ fun AppBarTitle(
           alpha = bottomTitleAlpha(connection)
         },
       overflow = TextOverflow.Ellipsis,
-      style = MaterialTheme.typography.h1.copy(brush = brush, lineHeight = lineHeight),
-      color = MaterialTheme.colors.primaryVariant,
+      style = MaterialTheme.typography.h1.copy(lineHeight = lineHeight),
+      color = titleColor,
       textAlign = textAlign
     )
     if (hostDevice != null) {

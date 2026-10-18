@@ -34,7 +34,7 @@ fun DefaultBasicTextField(
   leadingIcon: (@Composable () -> Unit)? = null,
   focus: Boolean = false,
   color: Color = MaterialTheme.colors.onBackground,
-  textStyle: TextStyle = TextStyle.Default,
+  textStyle: TextStyle = MaterialTheme.typography.body1,
   selectTextOnFocus: Boolean = false,
   keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
   keyboardActions: KeyboardActions = KeyboardActions(),
@@ -51,12 +51,12 @@ fun DefaultBasicTextField(
   }
   val enabled = true
   val colors = TextFieldDefaults.textFieldColors(
-    backgroundColor = Color.Unspecified,
+    backgroundColor = MaterialTheme.colors.surface,
     textColor = MaterialTheme.colors.onBackground,
     focusedIndicatorColor = Color.Unspecified,
     unfocusedIndicatorColor = Color.Unspecified,
   )
-  val shape = MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize)
+  val shape = MaterialTheme.shapes.small
   val interactionSource = remember { MutableInteractionSource() }
   BasicTextField(
     value = state.value,
@@ -139,13 +139,13 @@ fun DefaultConfigurableTextField(
   )
   val enabled = true
   val colors = TextFieldDefaults.textFieldColors(
-    backgroundColor = Color.Unspecified,
+    backgroundColor = MaterialTheme.colors.surface,
     textColor = MaterialTheme.colors.onBackground,
     focusedIndicatorColor = Color.Unspecified,
     unfocusedIndicatorColor = Color.Unspecified,
   )
   val color = MaterialTheme.colors.onBackground
-  val shape = MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize)
+  val shape = MaterialTheme.shapes.small
   val interactionSource = remember { MutableInteractionSource() }
   BasicTextField(
     value = state.value,
@@ -170,7 +170,7 @@ fun DefaultConfigurableTextField(
       keyboardActions.onDone?.invoke(this)
     }),
     singleLine = true,
-    textStyle = TextStyle.Default.copy(
+    textStyle = MaterialTheme.typography.body1.copy(
       color = color,
       fontWeight = FontWeight.Normal,
       fontSize = fontSize

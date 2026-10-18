@@ -5,13 +5,12 @@ import androidx.compose.ui.text.platform.Font
 import chat.simplex.common.platform.desktopPlatform
 import chat.simplex.res.MR
 
+// Kept as "Inter" for Kotlin API compatibility. Font resources are Golos Text.
 actual val Inter: FontFamily = FontFamily(
-  Font(MR.fonts.Inter.regular.file),
-  Font(MR.fonts.Inter.italic.file, style = FontStyle.Italic),
-  Font(MR.fonts.Inter.bold.file, FontWeight.Bold),
-  Font(MR.fonts.Inter.semibold.file, FontWeight.SemiBold),
-  Font(MR.fonts.Inter.medium.file, FontWeight.Medium),
-  Font(MR.fonts.Inter.light.file, FontWeight.Light)
+  Font(MR.fonts.GolosText.regular.file, FontWeight.Normal),
+  Font(MR.fonts.GolosText.regular.file, FontWeight.Medium),
+  Font(MR.fonts.GolosText.regular.file, FontWeight.SemiBold),
+  Font(MR.fonts.GolosText.regular.file, FontWeight.Bold)
 )
 
 actual val EmojiFont: FontFamily = if (desktopPlatform.isMac()) {

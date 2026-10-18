@@ -175,7 +175,7 @@ fun UITPProfileScreen(
           onValueChange = onDisplayNameChange,
           singleLine = true,
           enabled = !creating,
-          textStyle = TextStyle(color = profileText, fontSize = 16.sp),
+          textStyle = TextStyle(color = profileText, fontSize = 16.sp, fontFamily = chat.simplex.common.ui.theme.Inter),
           cursorBrush = Brush.linearGradient(listOf(profilePurple, profilePink)),
           keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Done),
           keyboardActions = KeyboardActions(onDone = { if (canCreate) onCreateProfile() }),

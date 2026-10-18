@@ -40,7 +40,7 @@ fun DefaultAppBar(
   } else if (!onTop) Modifier.imePadding()
   else Modifier
 
-  val themeBackgroundMix = MaterialTheme.colors.background.mixWith(MaterialTheme.colors.onBackground, 0.97f)
+  val themeBackgroundMix = MaterialTheme.colors.background
   val prefAlpha = remember { appPrefs.inAppBarsAlpha.state }
   val handler = LocalAppBarHandler.current
   val connection = LocalAppBarHandler.current?.connection
@@ -125,7 +125,7 @@ fun CallAppBar(
 }
 
 @Composable
-fun NavigationButtonBack(onButtonClicked: (() -> Unit)?, tintColor: Color = if (onButtonClicked != null) MaterialTheme.colors.primary else MaterialTheme.colors.secondary, height: Dp = 24.dp) {
+fun NavigationButtonBack(onButtonClicked: (() -> Unit)?, tintColor: Color = if (onButtonClicked != null) MaterialTheme.colors.onBackground else MaterialTheme.colors.secondary, height: Dp = 24.dp) {
   IconButton(onButtonClicked ?: {}, enabled = onButtonClicked != null) {
     Icon(
       painterResource(MR.images.ic_arrow_back_ios_new), stringResource(MR.strings.back), Modifier.height(height), tint = tintColor

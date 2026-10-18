@@ -19,7 +19,7 @@ fun DefaultDropdownMenu(
   dropdownMenuItems: (@Composable () -> Unit)?
 ) {
   MaterialTheme(
-    shapes = MaterialTheme.shapes.copy(medium = RoundedCornerShape(corner = CornerSize(25.dp)))
+    shapes = MaterialTheme.shapes.copy(medium = RoundedCornerShape(corner = CornerSize(12.dp)))
   ) {
     DropdownMenu(
       expanded = showMenu.value,
@@ -47,7 +47,7 @@ fun ExposedDropdownMenuBoxScope.DefaultExposedDropdownMenu(
   dropdownMenuItems: (@Composable () -> Unit)?
 ) {
   MaterialTheme(
-    shapes = MaterialTheme.shapes.copy(medium = RoundedCornerShape(corner = CornerSize(25.dp)))
+    shapes = MaterialTheme.shapes.copy(medium = RoundedCornerShape(corner = CornerSize(12.dp)))
   ) {
     ExposedDropdownMenu(
       modifier = Modifier
