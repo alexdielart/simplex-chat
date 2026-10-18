@@ -127,8 +127,7 @@ fun UITPWelcomeScreen(
       Spacer(Modifier.weight(1f))
 
       Column(
-        Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-          .padding(bottom = if (compact) 12.dp else 24.dp),
+        Modifier.fillMaxWidth().padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
         Box(
@@ -147,36 +146,8 @@ fun UITPWelcomeScreen(
             fontWeight = FontWeight.SemiBold
           )
         }
-        Spacer(Modifier.height(10.dp))
-        TextButton(
-          onClick = {
-            ModalManager.fullscreen.showCustomModal { close ->
-              UITPManifestScreen(
-                onBack = { close() },
-                onGetStarted = {
-                  close()
-                  onboardingStage.set(OnboardingStage.Step2_CreateProfile)
-                }
-              )
-            }
-          },
-          modifier = Modifier.fillMaxWidth().height(40.dp)
-        ) {
-          Icon(
-            painterResource(MR.images.ic_info),
-            contentDescription = null,
-            tint = welcomeLink,
-            modifier = Modifier.size(18.dp)
-          )
-          Spacer(Modifier.width(6.dp))
-          Text(
-            stringResource(MR.strings.uitp_welcome_why),
-            color = welcomeLink,
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Medium
-          )
-        }
       }
+      Spacer(Modifier.weight(1f))
     }
   }
 }

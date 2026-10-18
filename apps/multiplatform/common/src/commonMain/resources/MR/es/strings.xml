@@ -2863,7 +2863,7 @@
     <string name="uitp_manifest_back">Volver</string>
     <string name="uitp_profile_title">Tu perfil</string>
     <string name="uitp_profile_local">En tu teléfono, no en los servidores.</string>
-    <string name="uitp_profile_privacy">Sin número de teléfono. Sin correo. Sin cuenta.\nSolo un número interno de UITP.</string>
+    <string name="uitp_profile_privacy">Sin número de teléfono. Sin correo. Sin cuenta.</string>
     <string name="uitp_profile_display_name">Nombre visible</string>
     <string name="uitp_profile_hint">Por ejemplo, Eugenio</string>
     <string name="uitp_profile_create">Crear perfil</string>

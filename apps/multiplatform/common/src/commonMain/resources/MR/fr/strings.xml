@@ -2856,7 +2856,7 @@
     <string name="uitp_manifest_back">Retour</string>
     <string name="uitp_profile_title">Votre profil</string>
     <string name="uitp_profile_local">Sur votre téléphone, pas sur les serveurs.</string>
-    <string name="uitp_profile_privacy">Sans téléphone, sans e-mail, sans compte.\nSeulement un numéro UITP interne.</string>
+    <string name="uitp_profile_privacy">Sans téléphone, sans e-mail, sans compte.</string>
     <string name="uitp_profile_display_name">Nom affiché</string>
     <string name="uitp_profile_hint">Par exemple, Eugène</string>
     <string name="uitp_profile_create">Créer un profil</string>

@@ -2931,7 +2931,7 @@
     <string name="uitp_manifest_back">Назад</string>
     <string name="uitp_profile_title">Ваш профиль</string>
     <string name="uitp_profile_local">На вашем телефоне, а не на серверах.</string>
-    <string name="uitp_profile_privacy">Без номера телефона. Без email. Без аккаунта.\nТолько внутренний номер UITP.</string>
+    <string name="uitp_profile_privacy">Без номера телефона. Без email. Без аккаунта.</string>
     <string name="uitp_profile_display_name">Отображаемое имя</string>
     <string name="uitp_profile_hint">Например, Евгений</string>
     <string name="uitp_profile_create">Создать профиль</string>

@@ -3240,7 +3240,7 @@
   <string name="uitp_manifest_back">Back</string>
   <string name="uitp_profile_title">Your profile</string>
   <string name="uitp_profile_local">On your phone, not on servers.</string>
-  <string name="uitp_profile_privacy">No phone number. No email. No account.\nOnly an internal UITP number.</string>
+  <string name="uitp_profile_privacy">No phone number. No email. No account.</string>
   <string name="uitp_profile_display_name">Display name</string>
   <string name="uitp_profile_hint">e.g. Eugene</string>
   <string name="uitp_profile_create">Create profile</string>
