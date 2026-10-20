@@ -384,8 +384,9 @@ fun SettingsActionItemWithContent(icon: Painter?, text: String? = null, click: (
     if (text != null) {
       val padding = with(LocalDensity.current) { 6.sp.toDp() }
       Text(text, Modifier.weight(1f).padding(vertical = padding), color = if (disabled) MaterialTheme.colors.secondary else textColor)
-      Spacer(Modifier.width(DEFAULT_PADDING))
-      Row(Modifier.widthIn(max = (windowWidth() - DEFAULT_PADDING * 2) / 2)) {
+      Spacer(Modifier.width(12.dp))
+      // Keep compact setting values from forcing the label into three or four lines.
+      Row(Modifier.widthIn(max = (windowWidth() - DEFAULT_PADDING * 2) * 0.42f)) {
         content()
       }
     } else {

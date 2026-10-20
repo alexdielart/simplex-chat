@@ -21,7 +21,7 @@ fun AppBarTitle(
   title: String,
   hostDevice: Pair<Long?, String>? = null,
   withPadding: Boolean = true,
-  bottomPadding: Dp = DEFAULT_PADDING * 1.5f + 8.dp,
+  bottomPadding: Dp = DEFAULT_PADDING + 4.dp,
   enableAlphaChanges: Boolean = true,
   overrideTitleColor: Color? = null,
   textAlign: TextAlign = TextAlign.Start,
@@ -38,6 +38,12 @@ fun AppBarTitle(
     }
   }
   val titleColor = overrideTitleColor ?: MaterialTheme.appColors.title
+  // On narrow screens long localized titles should not split a single word awkwardly.
+  val uitpTitleSize = when {
+    title.length >= 27 -> 24.sp
+    title.length >= 18 -> 27.sp
+    else -> 32.sp
+  }
   Column {
     Text(
       title,
@@ -47,7 +53,8 @@ fun AppBarTitle(
           alpha = bottomTitleAlpha(connection)
         },
       overflow = TextOverflow.Ellipsis,
-      style = MaterialTheme.typography.h1.copy(lineHeight = lineHeight),
+      maxLines = 2,
+      style = MaterialTheme.typography.h1.copy(fontSize = uitpTitleSize, lineHeight = lineHeight),
       color = titleColor,
       textAlign = textAlign
     )

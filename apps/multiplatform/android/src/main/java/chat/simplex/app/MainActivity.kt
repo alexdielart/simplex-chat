@@ -38,6 +38,13 @@ class MainActivity: FragmentActivity() {
       window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
     super.onCreate(savedInstanceState)
+    // UITP Connect: migrate existing installations to the top navigation layout once.
+    // The user can still change the one-hand preference later in Appearance.
+    val uitpUI = getSharedPreferences("uitp_ui_migrations", MODE_PRIVATE)
+    if (!uitpUI.getBoolean("top_navigation_v1", false)) {
+      ChatController.appPrefs.oneHandUI.set(false)
+      uitpUI.edit().putBoolean("top_navigation_v1", true).apply()
+    }
     // testJson()
     // When call ended and orientation changes, it re-process old intent, it's unneeded.
     // Only needed to be processed on first creation of activity
@@ -54,6 +61,11 @@ class MainActivity: FragmentActivity() {
       )
     }
     enableEdgeToEdge()
+    // enableEdgeToEdge() may reset the status-bar icon appearance. Reapply UITP theme.
+    platform.androidSetStatusAndNavigationBarAppearance(
+      CurrentColors.value.colors.isLight,
+      CurrentColors.value.colors.isLight
+    )
     setContent {
       AppScreen()
     }

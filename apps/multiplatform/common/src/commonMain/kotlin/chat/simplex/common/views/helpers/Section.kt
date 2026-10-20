@@ -319,7 +319,7 @@ fun SectionTextFooter(text: String, color: Color = MaterialTheme.colors.secondar
 fun SectionTextFooter(text: AnnotatedString, textAlign: TextAlign = TextAlign.Start, color: Color = MaterialTheme.colors.secondary) {
   Text(
     text,
-    Modifier.padding(start = DEFAULT_PADDING, end = DEFAULT_PADDING, top = DEFAULT_PADDING_HALF).fillMaxWidth(0.9F),
+    Modifier.fillMaxWidth().padding(start = DEFAULT_PADDING, end = DEFAULT_PADDING, top = DEFAULT_PADDING_HALF),
     color = color,
     lineHeight = 18.sp,
     fontSize = 14.sp,

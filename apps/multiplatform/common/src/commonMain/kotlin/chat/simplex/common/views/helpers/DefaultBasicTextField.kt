@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import chat.simplex.common.views.database.PassphraseStrength
 import chat.simplex.res.MR
+import chat.simplex.common.ui.theme.UITPColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -51,7 +52,7 @@ fun DefaultBasicTextField(
   }
   val enabled = true
   val colors = TextFieldDefaults.textFieldColors(
-    backgroundColor = MaterialTheme.colors.surface,
+    backgroundColor = if (MaterialTheme.colors.isLight) MaterialTheme.colors.surface else UITPColors.Input,
     textColor = MaterialTheme.colors.onBackground,
     focusedIndicatorColor = Color.Unspecified,
     unfocusedIndicatorColor = Color.Unspecified,
@@ -139,7 +140,7 @@ fun DefaultConfigurableTextField(
   )
   val enabled = true
   val colors = TextFieldDefaults.textFieldColors(
-    backgroundColor = MaterialTheme.colors.surface,
+    backgroundColor = if (MaterialTheme.colors.isLight) MaterialTheme.colors.surface else UITPColors.Input,
     textColor = MaterialTheme.colors.onBackground,
     focusedIndicatorColor = Color.Unspecified,
     unfocusedIndicatorColor = Color.Unspecified,

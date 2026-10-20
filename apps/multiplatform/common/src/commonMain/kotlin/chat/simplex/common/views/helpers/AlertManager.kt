@@ -65,7 +65,7 @@ class AlertManager {
             buttons()
           }
         },
-        shape = RoundedCornerShape(corner = CornerSize(25.dp))
+        shape = RoundedCornerShape(corner = CornerSize(20.dp))
       )
     }
   }
@@ -97,7 +97,7 @@ class AlertManager {
             }
           }
         },
-        shape = RoundedCornerShape(corner = CornerSize(25.dp))
+        shape = RoundedCornerShape(corner = CornerSize(20.dp))
       )
     }
   }
@@ -118,7 +118,7 @@ class AlertManager {
             buttons()
           }
         },
-        shape = RoundedCornerShape(corner = CornerSize(25.dp))
+        shape = RoundedCornerShape(corner = CornerSize(20.dp))
       )
     }
   }
@@ -168,7 +168,7 @@ class AlertManager {
             AlertContent(text?.let { AnnotatedString(it) }, hostDevice, true, content = buttonRow)
           }
         },
-        shape = RoundedCornerShape(corner = CornerSize(25.dp))
+        shape = RoundedCornerShape(corner = CornerSize(20.dp))
       )
     }
   }
@@ -204,7 +204,7 @@ class AlertManager {
             }
           }
         },
-        shape = RoundedCornerShape(corner = CornerSize(25.dp))
+        shape = RoundedCornerShape(corner = CornerSize(20.dp))
       )
     }
   }
@@ -253,7 +253,7 @@ class AlertManager {
             }
           }
         },
-        shape = RoundedCornerShape(corner = CornerSize(25.dp))
+        shape = RoundedCornerShape(corner = CornerSize(20.dp))
       )
     }
   }
@@ -273,7 +273,7 @@ class AlertManager {
             }
           }
         },
-        shape = RoundedCornerShape(corner = CornerSize(25.dp))
+        shape = RoundedCornerShape(corner = CornerSize(20.dp))
       )
     }
   }
@@ -422,7 +422,7 @@ class AlertManager {
             }
           }
         },
-        shape = RoundedCornerShape(corner = CornerSize(25.dp))
+        shape = RoundedCornerShape(corner = CornerSize(20.dp))
       )
     }
   }
