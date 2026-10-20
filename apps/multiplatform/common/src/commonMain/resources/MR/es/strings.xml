@@ -2292,7 +2292,7 @@
     <string name="restore_passphrase_can_not_be_read_enter_manually_desc">La frase de contraseña no se ha podido leer en Keystore. Por favor, introdúcela manualmente. Puede deberse a alguna actualización del sistema incompatible con la aplicación. Si no es así, por favor, ponte en contacto con los desarrolladores.</string>
     <string name="onboarding_conditions_accept">Aceptar</string>
     <string name="onboarding_conditions_privacy_policy_and_conditions_of_use">Política de privacidad y condiciones de uso.</string>
-    <string name="onboarding_conditions_private_chats_not_accessible">Los operadores se comprometen a:\n- Ser independientes\n- Minimizar el tratamiento de metadatos\n- Ejecutar código open-source verificado</string>
+    <string name="onboarding_conditions_private_chats_not_accessible">El operador se compromete a:\n- Ser independiente\n- Minimizar el tratamiento de metadatos\n- Ejecutar código open-source verificado</string>
     <string name="onboarding_conditions_by_using_you_agree">Te comprometes a:\n- Sólo contenido legal en grupos públicos  \n- Respetar a los demás usuarios — no hacer spam</string>
     <string name="simplex_link_channel">Enlace de canal UITP Connect</string>
     <string name="full_link_button_text">Enlace completo</string>
@@ -2874,4 +2874,5 @@
     <string name="uitp_network_configure_servers">Configurar servidores</string>
     <string name="uitp_network_configure_notifications">Configurar notificaciones</string>
     <string name="uitp_network_continue">Continuar</string>
+  <string name="uitp_notifications_done">Listo</string>
 </resources>

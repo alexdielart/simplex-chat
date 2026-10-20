@@ -471,12 +471,24 @@ private fun AndroidOnboardingCards() {
     WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
   }
   Box(Modifier.fillMaxSize().padding(top = topPad, bottom = bottomPad)) {
-    ConnectOnboardingView()
+    UITPScreen8Content(
+      onShareLink = {
+        ModalManager.start.showModalCloseable { close ->
+          NewChatView(chatModel.currentRemoteHost.value, NewChatOption.INVITE, close = close)
+        }
+      },
+      onConnectViaLinkOrQr = {
+        ModalManager.start.showModalCloseable { close ->
+          NewChatView(chatModel.currentRemoteHost.value, NewChatOption.CONNECT, showQRCodeScanner = true, close = close)
+        }
+      }
+    )
   }
 }
 
 @Composable
 private fun BoxScope.NewChatSheetFloatingButton(oneHandUI: State<Boolean>, stopped: Boolean) {
+  val uitpScreen8Visible = appPlatform.isAndroid && shouldShowOnboarding()
   FloatingActionButton(
     onClick = {
       if (!stopped) {
@@ -487,14 +499,19 @@ private fun BoxScope.NewChatSheetFloatingButton(oneHandUI: State<Boolean>, stopp
       .navigationBarsPadding()
       .padding(end = DEFAULT_PADDING, bottom = DEFAULT_PADDING)
       .align(Alignment.BottomEnd)
-      .size(AppBarHeight * fontSizeSqrtMultiplier),
+      .size(if (uitpScreen8Visible) 56.dp else AppBarHeight * fontSizeSqrtMultiplier)
+      .then(
+        if (uitpScreen8Visible && !stopped)
+          Modifier.background(Brush.linearGradient(listOf(Color(0xFF8B5CFF), Color(0xFFE5479B))), CircleShape)
+        else Modifier
+      ),
     elevation = FloatingActionButtonDefaults.elevation(
       defaultElevation = 0.dp,
       pressedElevation = 0.dp,
       hoveredElevation = 0.dp,
       focusedElevation = 0.dp,
     ),
-    backgroundColor = if (!stopped) MaterialTheme.colors.primary else MaterialTheme.colors.secondary,
+    backgroundColor = if (uitpScreen8Visible && !stopped) Color.Transparent else if (!stopped) MaterialTheme.colors.primary else MaterialTheme.colors.secondary,
     contentColor = Color.White
   ) {
     Icon(painterResource(MR.images.ic_edit_filled), stringResource(MR.strings.add_contact_or_create_group), Modifier.size(22.dp * fontSizeSqrtMultiplier))

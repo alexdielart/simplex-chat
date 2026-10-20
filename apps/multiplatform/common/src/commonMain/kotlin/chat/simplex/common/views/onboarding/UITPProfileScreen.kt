@@ -69,7 +69,6 @@ fun UITPProfileScreen(
   val createLabel = stringResource(MR.strings.uitp_profile_create)
   val inputLabel = stringResource(MR.strings.uitp_profile_display_name)
   val canCreate = canSubmit && !creating
-  val scroll = rememberScrollState()
 
   Column(
     modifier.fillMaxSize()
@@ -114,10 +113,28 @@ fun UITPProfileScreen(
       }
     }
 
-    Column(
-      Modifier.fillMaxSize().verticalScroll(scroll).padding(bottom = 20.dp),
-      horizontalAlignment = Alignment.CenterHorizontally
+    // UITP_CTA_MIDPOINT_V1
+    UITPCenteredActionLayout(
+      modifier = Modifier.fillMaxWidth().weight(1f),
+      action = {
+        Box(
+          Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+            .height(52.dp).clip(RoundedCornerShape(12.dp))
+            .background(if (canCreate) Brush.linearGradient(listOf(profilePurple, profilePink))
+                else Brush.linearGradient(listOf(profilePurple.copy(alpha = .35f), profilePink.copy(alpha = .35f))))
+            .clickable(enabled = canCreate, role = Role.Button, onClick = onCreateProfile),
+          contentAlignment = Alignment.Center
+        ) {
+          if (creating) {
+            CircularProgressIndicator(color = profileText, strokeWidth = 2.dp, modifier = Modifier.size(22.dp))
+          } else {
+            Text(createLabel, color = profileText, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+          }
+        }
+      }
     ) {
+      Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+
       Spacer(Modifier.height(8.dp))
       Box(
         Modifier.size(96.dp).clip(RoundedCornerShape(28.dp))
@@ -197,20 +214,6 @@ fun UITPProfileScreen(
           }
         )
       }
-      Spacer(Modifier.height(16.dp))
-      Box(
-        Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-          .height(52.dp).clip(RoundedCornerShape(12.dp))
-          .background(if (canCreate) Brush.linearGradient(listOf(profilePurple, profilePink))
-              else Brush.linearGradient(listOf(profilePurple.copy(alpha = .35f), profilePink.copy(alpha = .35f))))
-          .clickable(enabled = canCreate, role = Role.Button, onClick = onCreateProfile),
-        contentAlignment = Alignment.Center
-      ) {
-        if (creating) {
-          CircularProgressIndicator(color = profileText, strokeWidth = 2.dp, modifier = Modifier.size(22.dp))
-        } else {
-          Text(createLabel, color = profileText, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-        }
       }
     }
   }

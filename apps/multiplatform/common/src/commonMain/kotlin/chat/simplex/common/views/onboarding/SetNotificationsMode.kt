@@ -23,6 +23,10 @@ import dev.icerock.moko.resources.compose.painterResource
 
 @Composable
 fun SetNotificationsMode(currentMode: MutableState<NotificationsMode>, onDone: () -> Unit) {
+  if (appPlatform.isAndroid) {
+    UITPNotificationsScreen(currentMode, onDone)
+    return
+  }
   CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
     ModalView({}, showClose = false) {
       ColumnWithScrollBar(Modifier.themedBackground(bgLayerSize = LocalAppBarHandler.current?.backgroundGraphicsLayerSize, bgLayer = LocalAppBarHandler.current?.backgroundGraphicsLayer)) {

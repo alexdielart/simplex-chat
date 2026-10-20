@@ -1349,7 +1349,7 @@
   <string name="use_random_passphrase">Use random passphrase</string>
 
   <!-- ChooseServerOperators.kt -->
-  <string name="onboarding_conditions_private_chats_not_accessible">Operators commit to:\n- Be independent\n- Minimize metadata usage\n- Run verified open-source code</string>
+  <string name="onboarding_conditions_private_chats_not_accessible">The operator commits to:\n- Being independent\n- Minimizing metadata usage\n- Running verified open-source code</string>
   <string name="onboarding_conditions_by_using_you_agree">You commit to:\n- Only legal content in public groups\n- Respect other users — no spam</string>
   <string name="onboarding_conditions_privacy_policy_and_conditions_of_use">Privacy policy and conditions of use.</string>
   <string name="onboarding_conditions_accept">Accept</string>
@@ -3251,4 +3251,5 @@
   <string name="uitp_network_configure_servers">Configure servers</string>
   <string name="uitp_network_configure_notifications">Configure notifications</string>
   <string name="uitp_network_continue">Continue</string>
+  <string name="uitp_notifications_done">Done</string>
 </resources>

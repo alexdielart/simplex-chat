@@ -18,6 +18,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -38,8 +44,19 @@ import chat.simplex.res.MR
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
+// UITP_COMMITMENTS_SCREEN_V2_BEGIN
+private const val UITP_LEGAL_URL = "https://uitp.io/legal"
+private val uitpCommitmentsBackground = Color(0xFF0B0B12)
+private val uitpCommitmentsSurface = Color(0xFF15151F)
+private val uitpCommitmentsText = Color(0xFFF2F2F5)
+private val uitpCommitmentsMuted = Color(0xFF7A7A88)
+private val uitpCommitmentsPurple = Color(0xFF8B5CFF)
+private val uitpCommitmentsPink = Color(0xFFE5479B)
+private val uitpCommitmentsLink = Color(0xFFC79BFF)
+
 @Composable
 fun OnboardingConditionsView(chatModel: ChatModel) {
+  val uriHandler = LocalUriHandler.current
   LaunchedEffect(Unit) {
     prepareChatBeforeFinishingOnboarding()
   }
@@ -56,82 +73,187 @@ fun OnboardingConditionsView(chatModel: ChatModel) {
   } else {
     CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
       ModalView({}, showClose = false, showAppBar = false, cardScreen = true) {
-        OnboardingShrinkingLayout(
-          modifier = Modifier.fillMaxSize().themedBackground(bgLayerSize = LocalAppBarHandler.current?.backgroundGraphicsLayerSize, bgLayer = LocalAppBarHandler.current?.backgroundGraphicsLayer)
-            .systemBarsPadding()
-            .padding(horizontal = DEFAULT_ONBOARDING_HORIZONTAL_PADDING),
-          topPadding = DEFAULT_PADDING,
-          image = {
-            Column(Modifier.padding(vertical = DEFAULT_PADDING_HALF), horizontalAlignment = Alignment.CenterHorizontally) {
-              OnboardingImage(
-                MR.images.network_commitments, MR.images.network_commitments_light, MR.images.ic_shield,
-                modifier = Modifier.fillMaxWidth(),
-                aspectRatio = 1.5f
-              )
-            }
-          },
-          content = {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-              Text(
-                stringResource(MR.strings.onboarding_network_commitments),
-                style = MaterialTheme.typography.h1,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                lineHeight = 42.sp,
-                modifier = Modifier.padding(top = DEFAULT_PADDING_HALF)
-              )
-              Column(
+        BoxWithConstraints(
+          Modifier.fillMaxSize().background(uitpCommitmentsBackground).systemBarsPadding()
+        ) {
+          val compact = maxHeight < 750.dp
+          val heroHeight = when {
+            maxHeight < 620.dp -> 130.dp
+            maxHeight < 750.dp -> 170.dp
+            else -> 200.dp
+          }
+
+          // UITP_CTA_MIDPOINT_V1
+          UITPCenteredActionLayout(
+            modifier = Modifier.fillMaxSize(),
+            action = {
+              Box(
                 Modifier.fillMaxWidth()
-                  .padding(horizontal = DEFAULT_PADDING_HALF)
-                  .padding(top = DEFAULT_PADDING),
-                horizontalAlignment = Alignment.Start
+                  .padding(horizontal = 24.dp)
+                  .height(52.dp)
+                  .clip(RoundedCornerShape(12.dp))
+                  .background(
+                    if (selectedOperatorIds.value.isNotEmpty()) {
+                      Brush.linearGradient(listOf(uitpCommitmentsPurple, uitpCommitmentsPink))
+                    } else {
+                      Brush.linearGradient(listOf(uitpCommitmentsMuted, uitpCommitmentsMuted))
+                    }
+                  )
+                  .clickable(enabled = selectedOperatorIds.value.isNotEmpty(), role = Role.Button) {
+                    acceptConditions(selectedOperatorIds.value)
+                  },
+                contentAlignment = Alignment.Center
               ) {
                 Text(
-                  stringResource(MR.strings.onboarding_conditions_private_chats_not_accessible),
-                  style = MaterialTheme.typography.body2,
-                  lineHeight = 22.sp
-                )
-                Spacer(Modifier.height(DEFAULT_PADDING))
-                Text(
-                  stringResource(MR.strings.onboarding_conditions_by_using_you_agree),
-                  style = MaterialTheme.typography.body2,
-                  lineHeight = 22.sp
-                )
-                Spacer(Modifier.height(DEFAULT_PADDING))
-                Text(
-                  stringResource(MR.strings.onboarding_conditions_privacy_policy_and_conditions_of_use),
-                  style = MaterialTheme.typography.body1,
-                  fontWeight = FontWeight.Medium,
-                  color = MaterialTheme.colors.primary,
-                  modifier = Modifier
-                    .clickable(
-                      interactionSource = remember { MutableInteractionSource() },
-                      indication = null
-                    ) {
-                      ModalManager.fullscreen.showModal(endButtons = { ConditionsLinkButton() }) {
-                        SimpleConditionsView(rhId = null) {
-                          ModalManager.fullscreen.closeModal()
-                          acceptConditions(selectedOperatorIds.value)
-                        }
-                      }
-                    }
+                  stringResource(MR.strings.onboarding_conditions_accept),
+                  color = uitpCommitmentsText,
+                  fontSize = 16.sp,
+                  fontWeight = FontWeight.SemiBold
                 )
               }
             }
-          },
-          button = {
-            Column(Modifier.widthIn(max = 450.dp).padding(bottom = DEFAULT_PADDING * 2), horizontalAlignment = Alignment.CenterHorizontally) {
-              AcceptConditionsButton(enabled = selectedOperatorIds.value.isNotEmpty(), selectedOperatorIds)
-            }
+          ) {
+            Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
+
+              Spacer(Modifier.height(if (compact) 10.dp else 16.dp))
+              UITPCommitmentsHero(Modifier.fillMaxWidth().height(heroHeight))
+              Spacer(Modifier.height(if (compact) 18.dp else 24.dp))
+              Text(
+                stringResource(MR.strings.onboarding_network_commitments),
+                color = uitpCommitmentsText,
+                fontSize = 28.sp,
+                lineHeight = 34.sp,
+                fontWeight = FontWeight.SemiBold
+              )
+              Spacer(Modifier.height(18.dp))
+              UITPCommitmentsList(stringResource(MR.strings.onboarding_conditions_private_chats_not_accessible))
+              UITPCommitmentsList(stringResource(MR.strings.onboarding_conditions_by_using_you_agree))
+              Spacer(Modifier.height(18.dp))
+              Text(
+                stringResource(MR.strings.onboarding_conditions_privacy_policy_and_conditions_of_use),
+                color = uitpCommitmentsLink,
+                fontSize = 15.sp,
+                lineHeight = 20.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.clickable {
+                  uriHandler.openUriCatching(UITP_LEGAL_URL)
+                }
+              )
+                        }
           }
-        )
+        }
       }
     }
   }
 }
 
 @Composable
+private fun UITPCommitmentsHero(modifier: Modifier = Modifier) {
+  val shape = RoundedCornerShape(24.dp)
+  Box(
+    modifier.clip(shape)
+      .background(uitpCommitmentsSurface)
+      .drawBehind {
+        drawRect(
+          Brush.radialGradient(
+            colors = listOf(uitpCommitmentsPurple.copy(alpha = 0.28f), Color.Transparent),
+            center = Offset(size.width * 0.5f, size.height * 0.5f),
+            radius = size.minDimension * 0.68f
+          )
+        )
+      }
+      .border(1.dp, Color.White.copy(alpha = 0.06f), shape),
+    contentAlignment = Alignment.Center
+  ) {
+    Canvas(Modifier.size(76.dp)) {
+      val w = size.width
+      val h = size.height
+      val shield = Path().apply {
+        moveTo(w * 0.50f, h * 0.06f)
+        lineTo(w * 0.84f, h * 0.20f)
+        lineTo(w * 0.84f, h * 0.49f)
+        cubicTo(w * 0.84f, h * 0.71f, w * 0.70f, h * 0.87f, w * 0.50f, h * 0.96f)
+        cubicTo(w * 0.30f, h * 0.87f, w * 0.16f, h * 0.71f, w * 0.16f, h * 0.49f)
+        lineTo(w * 0.16f, h * 0.20f)
+        close()
+      }
+      val gradient = Brush.linearGradient(
+        listOf(uitpCommitmentsPurple, uitpCommitmentsPink),
+        start = Offset.Zero,
+        end = Offset(w, h)
+      )
+      drawPath(shield, brush = gradient, style = Stroke(width = 5.dp.toPx(), cap = StrokeCap.Round))
+      drawLine(
+        brush = gradient,
+        start = Offset(w * 0.34f, h * 0.51f),
+        end = Offset(w * 0.46f, h * 0.63f),
+        strokeWidth = 5.dp.toPx(),
+        cap = StrokeCap.Round
+      )
+      drawLine(
+        brush = gradient,
+        start = Offset(w * 0.46f, h * 0.63f),
+        end = Offset(w * 0.68f, h * 0.39f),
+        strokeWidth = 5.dp.toPx(),
+        cap = StrokeCap.Round
+      )
+    }
+  }
+}
+
+@Composable
+private fun UITPCommitmentsList(rawText: String) {
+  val lines = remember(rawText) {
+    rawText.replace("\\n", "\n").lines()
+      .map { it.trim() }
+      .filter { it.isNotEmpty() }
+  }
+  Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Text(
+      lines.firstOrNull().orEmpty().trimEnd(':').uppercase(),
+      color = uitpCommitmentsMuted,
+      fontSize = 11.sp,
+      lineHeight = 15.sp,
+      letterSpacing = 0.8.sp,
+      fontWeight = FontWeight.SemiBold
+    )
+    lines.drop(1).forEach { bullet ->
+      Row(
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalAlignment = Alignment.Top
+      ) {
+        Canvas(Modifier.size(16.dp)) {
+          drawLine(
+            color = uitpCommitmentsLink,
+            start = Offset(size.width * 0.18f, size.height * 0.53f),
+            end = Offset(size.width * 0.39f, size.height * 0.76f),
+            strokeWidth = 2.dp.toPx(),
+            cap = StrokeCap.Round
+          )
+          drawLine(
+            color = uitpCommitmentsLink,
+            start = Offset(size.width * 0.39f, size.height * 0.76f),
+            end = Offset(size.width * 0.82f, size.height * 0.25f),
+            strokeWidth = 2.dp.toPx(),
+            cap = StrokeCap.Round
+          )
+        }
+        Text(
+          bullet.removePrefix("-").trimStart(),
+          color = uitpCommitmentsText,
+          fontSize = 15.sp,
+          lineHeight = 20.sp,
+          modifier = Modifier.weight(1f)
+        )
+      }
+    }
+  }
+}
+// UITP_COMMITMENTS_SCREEN_V2_END
+
+@Composable
 private fun OnboardingConditionsDesktop(selectedOperatorIds: MutableState<Set<Long>>) {
+  val uriHandler = LocalUriHandler.current
   CompositionLocalProvider(LocalAppBarHandler provides rememberAppBarHandler()) {
     ModalView({}, showClose = false, cardScreen = true) {
       ColumnWithScrollBar(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -154,12 +276,7 @@ private fun OnboardingConditionsDesktop(selectedOperatorIds: MutableState<Set<Lo
                   interactionSource = remember { MutableInteractionSource() },
                   indication = null
                 ) {
-                  ModalManager.fullscreen.showModal(forceAnimated = true, endButtons = { ConditionsLinkButton() }) {
-                    SimpleConditionsView(rhId = null) {
-                      ModalManager.fullscreen.closeModal()
-                      acceptConditions(selectedOperatorIds.value)
-                    }
-                  }
+                  uriHandler.openUriCatching(UITP_LEGAL_URL)
                 }
             )
           }

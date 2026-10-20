@@ -48,14 +48,29 @@ fun UITPYourNetworkScreen(
   onContinue: () -> Unit,
   modifier: Modifier = Modifier
 ) {
-  Column(
-    modifier.fillMaxSize().background(networkBg).systemBarsPadding()
+  // UITP_CTA_MIDPOINT_V1
+  UITPCenteredActionLayout(
+    modifier = modifier.fillMaxSize().background(networkBg).systemBarsPadding(),
+    action = {
+      Box(
+        Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+          .height(52.dp)
+          .clip(RoundedCornerShape(12.dp))
+          .background(networkGradient)
+          .clickable(role = Role.Button, onClick = onContinue),
+        contentAlignment = Alignment.Center
+      ) {
+        Text(
+          stringResource(MR.strings.uitp_network_continue),
+          color = networkText,
+          fontSize = 16.sp,
+          fontWeight = FontWeight.SemiBold
+        )
+      }
+    }
   ) {
-    Column(
-      Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())
-        .padding(horizontal = 24.dp),
-      horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+
       Spacer(Modifier.height(20.dp))
       BoxWithConstraints(Modifier.fillMaxWidth()) {
         // 340dp is the height in the 390 x 844 reference; shrink on small phones.
@@ -97,31 +112,9 @@ fun UITPYourNetworkScreen(
       )
       Spacer(Modifier.height(22.dp))
       NetworkSettingRow(
-        title = stringResource(MR.strings.uitp_network_configure_servers),
-        iconIsServer = true,
-        onClick = onConfigureServers
-      )
-      Spacer(Modifier.height(8.dp))
-      NetworkSettingRow(
         title = stringResource(MR.strings.uitp_network_configure_notifications),
         iconIsServer = false,
         onClick = onConfigureNotifications
-      )
-      Spacer(Modifier.height(12.dp))
-    }
-    Box(
-      Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, bottom = 24.dp, top = 10.dp)
-        .height(52.dp)
-        .clip(RoundedCornerShape(12.dp))
-        .background(networkGradient)
-        .clickable(role = Role.Button, onClick = onContinue),
-      contentAlignment = Alignment.Center
-    ) {
-      Text(
-        stringResource(MR.strings.uitp_network_continue),
-        color = networkText,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold
       )
     }
   }

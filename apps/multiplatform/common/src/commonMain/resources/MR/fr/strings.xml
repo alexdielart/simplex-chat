@@ -2464,7 +2464,7 @@
     <string name="change_automatic_chat_deletion_message">Cette action est irréversible — les messages envoyés et reçus dans cette conversation avant la date sélectionnée seront supprimés.</string>
     <string name="text_field_set_chat_placeholder">Définir le nom de la conversation…</string>
     <string name="mute_all_chat">Mettre tout en sourdine</string>
-    <string name="onboarding_conditions_private_chats_not_accessible">Les opérateurs s’engagent à :\n- Être indépendants\n- Réduire au minimum l’utilisation des métadonnées\n- Exécuter du code open source vérifié</string>
+    <string name="onboarding_conditions_private_chats_not_accessible">L’opérateur s’engage à :\n- Être indépendant\n- Réduire au minimum l’utilisation des métadonnées\n- Exécuter du code open source vérifié</string>
     <string name="privacy_chat_list_open_full_web_link">Ouvrir le lien complet</string>
     <string name="privacy_chat_list_open_clean_web_link">Ouvrir le lien propre</string>
     <string name="chat_data">Données de conversation</string>
@@ -2867,4 +2867,5 @@
     <string name="uitp_network_configure_servers">Configurer les serveurs</string>
     <string name="uitp_network_configure_notifications">Configurer les notifications</string>
     <string name="uitp_network_continue">Continuer</string>
+  <string name="uitp_notifications_done">Terminé</string>
 </resources>

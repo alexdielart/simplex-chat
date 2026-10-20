@@ -36,7 +36,6 @@ private val manifestPink = Color(0xFFE5479B)
 @Composable
 fun UITPManifestScreen(onBack: () -> Unit, onGetStarted: () -> Unit) {
   val backLabel = stringResource(MR.strings.uitp_manifest_back)
-  val scroll = rememberScrollState()
 
   Column(
     Modifier.fillMaxSize().background(manifestBackground).systemBarsPadding()
@@ -64,12 +63,30 @@ fun UITPManifestScreen(onBack: () -> Unit, onGetStarted: () -> Unit) {
     }
 
     // Text is scrollable independently from the fixed bottom CTA.
-    Box(Modifier.weight(1f).fillMaxWidth()) {
-      Column(
-        Modifier.fillMaxSize()
-          .verticalScroll(scroll)
-          .padding(start = 24.dp, end = 24.dp, top = 12.dp, bottom = 32.dp)
-      ) {
+    // UITP_CTA_MIDPOINT_V1
+    UITPCenteredActionLayout(
+      modifier = Modifier.fillMaxWidth().weight(1f),
+      action = {
+        Box(Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
+          Box(
+            Modifier.fillMaxWidth().height(52.dp)
+              .clip(RoundedCornerShape(12.dp))
+              .background(Brush.linearGradient(listOf(manifestPurple, manifestPink)))
+              .clickable(role = Role.Button, onClick = onGetStarted),
+            contentAlignment = Alignment.Center
+          ) {
+            Text(
+              stringResource(MR.strings.get_started),
+              color = manifestText,
+              fontSize = 16.sp,
+              fontWeight = FontWeight.SemiBold
+            )
+          }
+        }
+      }
+    ) {
+      Column(Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, top = 12.dp, bottom = 12.dp)) {
+
         Text(
           stringResource(MR.strings.uitp_manifest_title),
           color = manifestText,
@@ -85,34 +102,7 @@ fun UITPManifestScreen(onBack: () -> Unit, onGetStarted: () -> Unit) {
         ManifestParagraph(stringResource(MR.strings.uitp_manifest_p3), manifestText)
         Spacer(Modifier.height(16.dp))
         ManifestParagraph(stringResource(MR.strings.uitp_manifest_p4), manifestSecondary)
-      }
-      Box(
-        Modifier.align(Alignment.BottomCenter)
-          .fillMaxWidth()
-          .height(120.dp)
-          .background(
-            Brush.verticalGradient(
-              colors = listOf(manifestBackground.copy(alpha = 0f), manifestBackground)
-            )
-          )
-      )
-    }
-
-    Box(Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 40.dp)) {
-      Box(
-        Modifier.fillMaxWidth().height(52.dp)
-          .clip(RoundedCornerShape(12.dp))
-          .background(Brush.linearGradient(listOf(manifestPurple, manifestPink)))
-          .clickable(role = Role.Button, onClick = onGetStarted),
-        contentAlignment = Alignment.Center
-      ) {
-        Text(
-          stringResource(MR.strings.get_started),
-          color = manifestText,
-          fontSize = 16.sp,
-          fontWeight = FontWeight.SemiBold
-        )
-      }
+            }
     }
   }
 }
