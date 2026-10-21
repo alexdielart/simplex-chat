@@ -441,7 +441,15 @@ private fun AcceptConditionsButton(
   )
 }
 
-private fun completeOnboarding() {
+// UITP_NETWORK_AUTOPROVISION_V1
+private suspend fun completeOnboarding() {
+  if (appPlatform.isAndroid && !applyUITPNetworkDefaults()) {
+    AlertManager.shared.showAlertMsg(
+      "UITP network configuration",
+      "The configured UITP servers could not be saved or validated. Registration has not finished. Check the server addresses and connectivity."
+    )
+    return
+  }
   appPrefs.onboardingStage.set(OnboardingStage.OnboardingComplete)
 }
 
