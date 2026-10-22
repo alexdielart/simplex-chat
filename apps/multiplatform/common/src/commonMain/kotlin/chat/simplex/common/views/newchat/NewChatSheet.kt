@@ -92,6 +92,7 @@ fun chatContactType(chat: Chat): ContactType {
     is ChatInfo.Direct -> {
       val contact = cInfo.contact
       when {
+        contact.isContactCard && cInfo.chatViewName.equals("Ask SimpleX Team", ignoreCase = true) -> ContactType.UNLISTED
         contact.nextAcceptContactRequest -> ContactType.CONTACT_WITH_REQUEST
         contact.isContactCard -> ContactType.CARD
         contact.chatDeleted -> ContactType.CHAT_DELETED

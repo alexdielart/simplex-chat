@@ -1058,25 +1058,9 @@ private fun BoxScope.ChatList(searchText: MutableState<TextFieldValue>, listStat
     // one slot: a badge the user paid for ending outranks the pitch to get one
     val alert = BadgeModel.alert.value
     if (supportEnded() && alert != null) {
-      item {
-        Box(Modifier.zIndex(1f).padding(16.dp)) {
-          SupportSimpleXBanner(
-            title = stringResource(MR.strings.badges_support_ended),
-            subtitle = String.format(stringResource(MR.strings.badges_support_ended_on), alert.dateText),
-            onTap = { ModalManager.start.showCustomModal { close -> BadgesView(close) } },
-            onDismiss = ::showSupportEndedDismissAlert
-          )
-        }
-      }
+
     } else if (!supporterBannerShown.value && !hasShownBadge() && chatModel.chats.value.size > 3) {
-      item {
-        Box(Modifier.zIndex(1f).padding(16.dp)) {
-          SupportSimpleXBanner(
-            onTap = { ModalManager.start.showCustomModal { close -> BadgesView(close) } },
-            onDismiss = ::showSupportSimpleXDismissAlert
-          )
-        }
-      }
+
     }
     itemsIndexed(chats, key = { _, chat -> chat.remoteHostId to chat.id }) { index, chat ->
       val nextChatSelected = remember(chat.id, chats) { derivedStateOf {
