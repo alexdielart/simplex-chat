@@ -99,7 +99,7 @@ actual class GlobalExceptionsHandler: Thread.UncaughtExceptionHandler {
             ?.findViewById<ViewGroup>(android.R.id.content)
             ?.removeViewAt(0)
           setContent {
-            AppScreen()
+            AccessControlledAppScreen()
           }
         }
       }

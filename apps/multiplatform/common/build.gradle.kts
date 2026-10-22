@@ -101,6 +101,8 @@ kotlin {
         val workVersion = "2.9.1"
         implementation("androidx.work:work-runtime-ktx:$workVersion")
 
+        implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
         // Video support
         implementation("com.google.android.exoplayer:exoplayer:2.19.1")
 

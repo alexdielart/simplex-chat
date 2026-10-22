@@ -73,6 +73,10 @@ class SimplexApp: Application(), LifecycleEventObserver {
     context = this
     initHaskell(packageName)
     initMultiplatform()
+    ensureInstallationId()
+
+    AccessManager.start()
+
     reconfigureBroadcastReceivers()
     runMigrations()
     tmpDir.deleteRecursively()
@@ -185,6 +189,12 @@ class SimplexApp: Application(), LifecycleEventObserver {
 
   companion object {
     lateinit var context: SimplexApp private set
+  }
+
+  private fun ensureInstallationId() {
+    if (appPrefs.installationId.get() == null) {
+      appPrefs.installationId.set(UUID.randomUUID().toString())
+    }
   }
 
   private fun initMultiplatform() {

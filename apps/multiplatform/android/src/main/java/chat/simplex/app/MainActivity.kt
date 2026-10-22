@@ -67,7 +67,7 @@ class MainActivity: FragmentActivity() {
       CurrentColors.value.colors.isLight
     )
     setContent {
-      AppScreen()
+      AccessControlledAppScreen()
     }
     SimplexApp.context.schedulePeriodicServiceRestartWorker()
     SimplexApp.context.schedulePeriodicWakeUp()
