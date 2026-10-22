@@ -22,7 +22,7 @@ data class AccessCheckResponse(
 
 object AccessClient {
   private const val TAG = "SimpleXAccess"
-  private const val ACCESS_CHECK_URL = "http://85.215.166.59/v1/access/check"
+  private const val ACCESS_CHECK_URL = "https://access.uitp.date/v1/access/check"
   private const val DEFAULT_CHECK_INTERVAL_SECONDS = 300L
 
   private val client = OkHttpClient.Builder()
