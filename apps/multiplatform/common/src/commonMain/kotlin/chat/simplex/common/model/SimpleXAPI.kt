@@ -2051,6 +2051,34 @@ object ChatController {
     return null
   }
 
+  // UITP internal numbers: obtain a stable SimpleX contact address before registering it.
+  // Only create an address when the core explicitly reports that none exists.
+  // On other errors (e.g. network failure), do not create a replacement address.
+  suspend fun apiEnsureUserAddress(rh: Long?): UserContactLinkRec? {
+    val userId = kotlin.runCatching { currentUserId("apiEnsureUserAddress") }.getOrElse { return null }
+    val result = sendCmd(rh, CC.ApiShowMyAddress(userId))
+    if (result is API.Result && result.res is CR.UserContactLink) {
+      return result.res.contactLink
+    }
+    val addressMissing = result is API.Error &&
+      result.err is ChatError.ChatErrorStore &&
+      result.err.storeError is StoreError.UserContactLinkNotFound
+    if (!addressMissing) return null
+
+    val created = apiCreateUserAddress(rh) ?: return apiGetUserAddress(rh)
+    val hasShortLink = created.connShortLink != null
+    return UserContactLinkRec(
+      created,
+      shortLinkDataSet = hasShortLink,
+      shortLinkLargeDataSet = hasShortLink,
+      addressSettings = AddressSettings(
+        businessAddress = false,
+        autoAccept = null,
+        autoReply = null
+      )
+    )
+  }
+
   suspend fun apiAddMyAddressShortLink(rh: Long?): UserContactLinkRec? {
     val userId = kotlin.runCatching { currentUserId("apiAddMyAddressShortLink") }.getOrElse { return null }
     val r = sendCmdWithRetry(rh, CC.ApiAddMyAddressShortLink(userId))
