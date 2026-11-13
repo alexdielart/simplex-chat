@@ -2047,6 +2047,22 @@ object ChatController {
     return null
   }
 
+  // UITP internal numbers: reuse the existing permanent contact address.
+  // Only create a new one when SimpleX explicitly says it does not exist.
+  suspend fun apiEnsureUserAddress(rh: Long?): CreatedConnLink? {
+    val userId = kotlin.runCatching { currentUserId("apiEnsureUserAddress") }.getOrElse { return null }
+    val result = sendCmd(rh, CC.ApiShowMyAddress(userId))
+    if (result is API.Result && result.res is CR.UserContactLink) {
+      return result.res.contactLink.connLinkContact
+    }
+    if (result is API.Error && result.err is ChatError.ChatErrorStore &&
+        result.err.storeError is StoreError.UserContactLinkNotFound) {
+      return apiCreateUserAddress(rh)
+    }
+    // Any other error must not cause a replacement address to be created.
+    return null
+  }
+
   suspend fun apiAddMyAddressShortLink(rh: Long?): UserContactLinkRec? {
     val userId = kotlin.runCatching { currentUserId("apiAddMyAddressShortLink") }.getOrElse { return null }
     val r = sendCmdWithRetry(rh, CC.ApiAddMyAddressShortLink(userId))
