@@ -1,34 +1,22 @@
 package chat.simplex.common.views.newchat
 
 import chat.simplex.common.platform.androidAppContext
+import chat.simplex.common.model.ChatController.appPrefs
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.UUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 internal actual object UITPDirectoryPlatform {
   private const val PREFS_NAME = "uitp_directory_poc"
-  private const val KEY_UUID = "installation_uuid"
   private const val KEY_SERVER = "server_url"
 
   private val prefs get() = androidAppContext.getSharedPreferences(PREFS_NAME, 0)
 
-  actual fun installationUuid(): String = synchronized(this) {
-    val existing = prefs.getString(KEY_UUID, null)
-    if (existing != null && validUITPUuid(existing)) {
-      existing
-    } else {
-      UUID.randomUUID().toString().also {
-        prefs.edit().putString(KEY_UUID, it).apply()
-      }
-    }
-  }
-
-  actual fun setInstallationUuid(uuid: String) {
-    require(validUITPUuid(uuid))
-    prefs.edit().putString(KEY_UUID, uuid.lowercase()).apply()
-  }
+  // The same UUID used by the existing Android access check.
+  // It is initialized once on SimplexApp startup and never replaced by Directory.
+  actual fun installationUuid(): String =
+    checkNotNull(appPrefs.installationId.get()) { "Installation UUID is not initialized." }
 
   actual fun serverUrl(): String =
     prefs.getString(KEY_SERVER, UITP_DIRECTORY_DEFAULT_URL) ?: UITP_DIRECTORY_DEFAULT_URL

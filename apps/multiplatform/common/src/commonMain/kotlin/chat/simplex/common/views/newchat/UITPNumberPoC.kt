@@ -32,8 +32,7 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
   val clipboard = LocalClipboardManager.current
   val scope = rememberCoroutineScope()
 
-  var installationUuid by remember { mutableStateOf(UITPDirectoryPlatform.installationUuid()) }
-  var uuidInput by rememberSaveable { mutableStateOf(installationUuid) }
+  val installationUuid = remember { UITPDirectoryPlatform.installationUuid() }
   var serverUrl by remember { mutableStateOf(UITPDirectoryPlatform.serverUrl()) }
   var serverInput by rememberSaveable { mutableStateOf(serverUrl) }
   var configError by remember { mutableStateOf<String?>(null) }
@@ -145,31 +144,16 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
       }) { Text("Save server") }
 
       OutlinedTextField(
-        value = uuidInput,
-        onValueChange = { uuidInput = it.trim().take(36) },
-        label = { Text("Device UUID (same as in UITP account)") },
+        value = installationUuid,
+        onValueChange = {},
+        readOnly = true,
+        label = { Text("Device UUID (register this in your UITP account)") },
         singleLine = true,
         modifier = Modifier.fillMaxWidth()
       )
-      Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Button(onClick = {
-          val normalized = uuidInput.trim().lowercase()
-          if (validUITPUuid(normalized)) {
-            UITPDirectoryPlatform.setInstallationUuid(normalized)
-            installationUuid = normalized
-            registrationAttempt += 1
-            resolvedNumber = null
-            resolvedAddress = null
-            lookupError = null
-            configError = null
-          } else {
-            configError = "Invalid UUID: use a standard 36-character UUID."
-          }
-        }) { Text("Use UUID") }
-        Button(onClick = {
-          clipboard.setText(AnnotatedString(installationUuid))
-        }) { Text("Copy UUID") }
-      }
+      Button(onClick = {
+        clipboard.setText(AnnotatedString(installationUuid))
+      }) { Text("Copy UUID") }
 
       if (configError != null) {
         Text(configError!!, color = MaterialTheme.colors.error)

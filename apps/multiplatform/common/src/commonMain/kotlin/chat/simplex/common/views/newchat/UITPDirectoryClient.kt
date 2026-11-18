@@ -19,13 +19,12 @@ internal data class UITPDirectoryResponse(
 )
 
 /**
- * The existing Laravel installation UUID is the only credential for this PoC.
- * A locally generated UUID must be entered into the account's Messenger device
- * list before registration; an already registered UUID can be pasted instead.
+ * The existing Android installation UUID is the only credential for this PoC.
+ * It is initialized once on app startup and shared with the access check.
+ * The same UUID must be registered in the Laravel account's Messenger device list.
  */
 internal expect object UITPDirectoryPlatform {
   fun installationUuid(): String
-  fun setInstallationUuid(uuid: String)
   fun serverUrl(): String
   fun setServerUrl(url: String)
   suspend fun postJson(baseUrl: String, route: String, jsonBody: String): UITPDirectoryHttpResponse
