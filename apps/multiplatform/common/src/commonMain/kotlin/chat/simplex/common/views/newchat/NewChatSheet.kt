@@ -54,6 +54,9 @@ fun ModalData.NewChatSheet(rh: RemoteHostInfo?, close: () -> Unit) {
 
     Column(modifier = Modifier.fillMaxSize()) {
       NewChatSheetLayout(
+        connectByNumber = {
+          ModalManager.start.showModalCloseable { _ -> UITPNumberPoC(chatModel.currentRemoteHost.value?.remoteHostId, closeAll) }
+        },
         addContact = {
           ModalManager.start.showModalCloseable(endButtons = { AddContactLearnMoreButton() }) { _ -> NewChatView(chatModel.currentRemoteHost.value, NewChatOption.INVITE, close = closeAll) }
         },
@@ -111,6 +114,7 @@ private fun filterContactTypes(c: List<Chat>, contactTypes: List<ContactType>): 
 @Composable
 private fun ModalData.NewChatSheetLayout(
   rh: RemoteHostInfo?,
+  connectByNumber: () -> Unit,
   addContact: () -> Unit,
   scanPaste: () -> Unit,
   createGroup: () -> Unit,
@@ -184,7 +188,12 @@ private fun ModalData.NewChatSheetLayout(
     derivedStateOf { filterContactTypes(chatModel.chats.value, deletedContactTypes) }
   }
 
-  val actionButtonsOriginal = listOf(
+  val actionButtonsOriginal = listOfNotNull(
+    if (appPlatform.isAndroid) Triple(
+      painterResource(MR.images.ic_search),
+      "Connect by number (PoC)",
+      connectByNumber,
+    ) else null,
     Triple(
       painterResource(MR.images.ic_add_link),
       stringResource(MR.strings.create_1_time_link),
