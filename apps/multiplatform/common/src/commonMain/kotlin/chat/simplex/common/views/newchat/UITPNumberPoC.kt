@@ -33,9 +33,7 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
   val scope = rememberCoroutineScope()
 
   val installationUuid = remember { UITPDirectoryPlatform.installationUuid() }
-  var serverUrl by remember { mutableStateOf(UITPDirectoryPlatform.serverUrl()) }
-  var serverInput by rememberSaveable { mutableStateOf(serverUrl) }
-  var configError by remember { mutableStateOf<String?>(null) }
+  val serverUrl = UITPDirectoryPlatform.serverUrl()
 
   var addressLoading by remember(rhId, currentUser?.userId) { mutableStateOf(false) }
   var addressError by remember(rhId, currentUser?.userId) { mutableStateOf<String?>(null) }
@@ -111,27 +109,7 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
       Text("UITP Directory - Android PoC", style = MaterialTheme.typography.h5)
       Text("The UUID must be registered under a Messenger device in your UITP account. The server must have the Directory API deployed.")
 
-      OutlinedTextField(
-        value = serverInput,
-        onValueChange = { serverInput = it },
-        label = { Text("Directory server HTTPS URL") },
-        singleLine = true,
-        modifier = Modifier.fillMaxWidth()
-      )
-      Button(onClick = {
-        val normalized = serverInput.trim().trimEnd('/')
-        if (validUITPServerUrl(normalized)) {
-          UITPDirectoryPlatform.setServerUrl(normalized)
-          serverUrl = normalized
-          registrationAttempt += 1
-          resolvedNumber = null
-          resolvedAddress = null
-          lookupError = null
-          configError = null
-        } else {
-          configError = "Use an HTTPS server URL, for example https://access.uitp.date"
-        }
-      }) { Text("Save server") }
+      Text("Directory API: " + serverUrl)
 
       OutlinedTextField(
         value = installationUuid,
@@ -145,9 +123,6 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
         clipboard.setText(AnnotatedString(installationUuid))
       }) { Text("Copy UUID") }
 
-      if (configError != null) {
-        Text(configError!!, color = MaterialTheme.colors.error)
-      }
       Divider()
 
       Text("My permanent SimpleX address")

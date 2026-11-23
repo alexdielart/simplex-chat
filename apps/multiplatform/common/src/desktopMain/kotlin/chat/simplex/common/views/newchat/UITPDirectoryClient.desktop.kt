@@ -7,7 +7,6 @@ package chat.simplex.common.views.newchat
 internal actual object UITPDirectoryPlatform {
   actual fun installationUuid(): String = ""
   actual fun serverUrl(): String = UITP_DIRECTORY_DEFAULT_URL
-  actual fun setServerUrl(url: String) = Unit
 
   actual suspend fun postJson(
     baseUrl: String,

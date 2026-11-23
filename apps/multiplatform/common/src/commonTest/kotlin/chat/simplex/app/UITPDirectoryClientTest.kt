@@ -15,7 +15,7 @@ class UITPDirectoryClientTest {
     assertTrue(validUITPUuid("fb6fa892-9638-4e78-ac2b-8d0bdb08f712"))
     assertFalse(validUITPUuid("not-a-uuid"))
     assertTrue(validUITPServerUrl("https://uitp.io"))
-    assertEquals("https://access.uitp.date", UITP_DIRECTORY_DEFAULT_URL)
+    assertEquals("https://uitp.io", UITP_DIRECTORY_DEFAULT_URL)
     assertTrue(validUITPServerUrl("https://staging.example.com:8443"))
     assertFalse(validUITPServerUrl("http://uitp.io"))
     assertFalse(validUITPServerUrl("https://uitp.io/path"))

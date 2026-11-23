@@ -7,8 +7,8 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 
-/** Temporary PoC endpoint. Configurable on the screen so a staging server can be used. */
-internal const val UITP_DIRECTORY_DEFAULT_URL = "https://access.uitp.date"
+/** Production Directory API, shared with the Android access-check backend. */
+internal const val UITP_DIRECTORY_DEFAULT_URL = "https://uitp.io"
 
 internal data class UITPDirectoryHttpResponse(val status: Int, val body: String)
 
@@ -26,7 +26,6 @@ internal data class UITPDirectoryResponse(
 internal expect object UITPDirectoryPlatform {
   fun installationUuid(): String
   fun serverUrl(): String
-  fun setServerUrl(url: String)
   suspend fun postJson(baseUrl: String, route: String, jsonBody: String): UITPDirectoryHttpResponse
 }
 
