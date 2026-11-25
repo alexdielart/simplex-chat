@@ -191,7 +191,7 @@ private fun ModalData.NewChatSheetLayout(
   val actionButtonsOriginal = listOfNotNull(
     if (appPlatform.isAndroid) Triple(
       painterResource(MR.images.ic_search),
-      "Connect by number (PoC)",
+      "Connect by number",
       connectByNumber,
     ) else null,
     Triple(
@@ -336,7 +336,7 @@ private fun ModalData.NewChatSheetLayout(
         }
       }
       item {
-        DeletedChatsItem(actionButtonsOriginal.asReversed())
+        DeletedChatsItem(if (appPlatform.isAndroid) actionButtonsOriginal.take(1) + actionButtonsOriginal.drop(1).asReversed() else actionButtonsOriginal.asReversed())
       }
       item {
         if (filteredContactChats.isNotEmpty() && searchText.value.text.isEmpty()) {

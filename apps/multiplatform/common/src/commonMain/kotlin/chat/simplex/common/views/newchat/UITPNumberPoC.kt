@@ -5,6 +5,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
@@ -24,7 +26,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
   if (!appPlatform.isAndroid) {
-    Text("UITP Directory PoC is available on Android only.")
+    Text("Connection by number is available on Android only.")
     return
   }
 
@@ -48,8 +50,6 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
   var lookupNumber by rememberSaveable { mutableStateOf("") }
   var lookupLoading by remember { mutableStateOf(false) }
   var lookupError by remember { mutableStateOf<String?>(null) }
-  var resolvedNumber by remember { mutableStateOf<String?>(null) }
-  var resolvedAddress by remember { mutableStateOf<String?>(null) }
 
   // Reuse the core helper: create only when the address is confirmed missing.
   LaunchedEffect(rhId, currentUser?.userId, addressAttempt) {
@@ -99,144 +99,171 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
   }
 
   val validLookup = Regex("^[1-9][0-9]{9}$").matches(lookupNumber)
-  val canConnect = resolvedAddress != null && resolvedNumber == lookupNumber && !lookupLoading
 
   ColumnWithScrollBar {
     Column(
       Modifier.fillMaxWidth().padding(16.dp),
       verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-      Text("UITP Directory - Android PoC", style = MaterialTheme.typography.h5)
-      Text("The UUID must be registered under a Messenger device in your UITP account. The server must have the Directory API deployed.")
-
-      Text("Directory API: " + serverUrl)
-
-      OutlinedTextField(
-        value = installationUuid,
-        onValueChange = {},
-        readOnly = true,
-        label = { Text("Device UUID (register this in your UITP account)") },
-        singleLine = true,
-        modifier = Modifier.fillMaxWidth()
+      Text(
+        "Connect by number",
+        style = MaterialTheme.typography.h5
       )
-      Button(onClick = {
-        clipboard.setText(AnnotatedString(installationUuid))
-      }) { Text("Copy UUID") }
-
-      Divider()
-
-      Text("My permanent SimpleX address")
-      if (addressLoading && ownAddress == null) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-          CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-          Text("Preparing your contact address...")
-        }
-      }
-      if (ownAddress != null) {
-        OutlinedTextField(
-          value = ownAddress,
-          onValueChange = {},
-          readOnly = true,
-          label = { Text("SimpleX contact address") },
-          maxLines = 4,
-          modifier = Modifier.fillMaxWidth()
-        )
-        Button(onClick = { clipboard.setText(AnnotatedString(ownAddress)) }) {
-          Text("Copy my address")
-        }
-      }
-      if (addressError != null) {
-        Text(addressError!!, color = MaterialTheme.colors.error)
-        Button(onClick = { addressAttempt += 1 }) { Text("Retry address creation") }
-      }
-      Divider()
 
       Text("My UITP number")
-      if (registrationLoading) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-          CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-          Text("Registering with Directory API...")
+
+      if (addressLoading || registrationLoading) {
+        Row(
+          horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+          CircularProgressIndicator(
+            Modifier.size(18.dp),
+            strokeWidth = 2.dp
+          )
+          Text("Preparing your number...")
         }
       }
-      if (ownNumber != null) {
-        Text(ownNumber!!, style = MaterialTheme.typography.h5)
-        Button(onClick = { clipboard.setText(AnnotatedString(ownNumber!!)) }) {
+
+      ownNumber?.let { number ->
+        Text(
+          number,
+          style = MaterialTheme.typography.h5
+        )
+
+        OutlinedButton(
+          onClick = {
+            clipboard.setText(AnnotatedString(number))
+          }
+        ) {
           Text("Copy my number")
         }
       }
-      if (registrationError != null) {
-        Text(registrationError!!, color = MaterialTheme.colors.error)
-        Text("Check your UUID, Messenger access, and Directory server. An existing address cannot be replaced automatically.")
+
+      if (addressError != null) {
+        Text(
+          "Could not prepare your number.",
+          color = MaterialTheme.colors.error
+        )
+
+        OutlinedButton(
+          enabled = !addressLoading,
+          onClick = { addressAttempt += 1 }
+        ) {
+          Text("Retry")
+        }
       }
-      Button(
-        enabled = !registrationLoading && ownAddress != null,
-        onClick = { registrationAttempt += 1 }
-      ) { Text("Retry registration") }
+
+      if (registrationError != null) {
+        Text(
+          "Could not retrieve your number. Check your Messenger access and connection.",
+          color = MaterialTheme.colors.error
+        )
+
+        OutlinedButton(
+          enabled = !registrationLoading && ownAddress != null,
+          onClick = { registrationAttempt += 1 }
+        ) {
+          Text("Retry")
+        }
+      }
+
+      if (!validUITPServerUrl(serverUrl)) {
+        Text(
+          "Service unavailable.",
+          color = MaterialTheme.colors.error
+        )
+      }
+
       Divider()
 
       OutlinedTextField(
         value = lookupNumber,
         onValueChange = {
-          lookupNumber = it.filter { c -> c in '0'..'9' }.take(10)
-          resolvedNumber = null
-          resolvedAddress = null
+          lookupNumber = it.filter { c ->
+            c in '0'..'9'
+          }.take(10)
+
           lookupError = null
         },
-        label = { Text("Enter UITP number to connect") },
+        label = { Text("Enter UITP number") },
         singleLine = true,
+        enabled = !lookupLoading,
+        keyboardOptions = KeyboardOptions(
+          keyboardType = KeyboardType.Number
+        ),
         modifier = Modifier.fillMaxWidth()
       )
+
       Button(
-        enabled = validLookup && !lookupLoading && validUITPServerUrl(serverUrl),
+        modifier = Modifier.fillMaxWidth(),
+        enabled = validLookup &&
+          !lookupLoading &&
+          validUITPServerUrl(serverUrl),
         onClick = {
           val requestedNumber = lookupNumber
           val requestedUuid = installationUuid
           val requestedServer = serverUrl
+
           lookupLoading = true
           lookupError = null
-          resolvedNumber = null
-          resolvedAddress = null
+
           scope.launch {
             try {
-              val response = uitpDirectoryResolve(requestedServer, requestedUuid, requestedNumber)
+              val response = uitpDirectoryResolve(
+                requestedServer,
+                requestedUuid,
+                requestedNumber
+              )
+
               if (lookupNumber == requestedNumber &&
                   installationUuid == requestedUuid &&
                   serverUrl == requestedServer) {
-                if (response.number == requestedNumber && response.contactAddress != null) {
-                  resolvedNumber = requestedNumber
-                  resolvedAddress = response.contactAddress
+
+                val address = response.contactAddress
+
+                if (response.number == requestedNumber &&
+                    address != null) {
+                  withBGApi {
+                    planAndConnect(
+                      rhId,
+                      address,
+                      close = close
+                    )
+                  }
                 } else {
-                  lookupError = response.error ?: "Directory lookup failed."
+                  lookupError = "Could not connect to this number. Check the number and your Messenger access."
                 }
               }
             } catch (e: CancellationException) {
               throw e
             } catch (e: Exception) {
-              lookupError = "Unable to reach Directory API: " + (e.message ?: "network error")
+              lookupError = "Connection failed. Please try again."
             } finally {
               lookupLoading = false
             }
           }
         }
-      ) { Text(if (lookupLoading) "Searching..." else "Find by number") }
-
-      if (lookupError != null) {
-        Text(lookupError!!, color = MaterialTheme.colors.error)
-      }
-      if (canConnect) {
-        Text("Contact found: " + resolvedNumber)
-      }
-      Button(
-        enabled = canConnect,
-        onClick = {
-          resolvedAddress?.let { address ->
-            withBGApi {
-              planAndConnect(rhId, address, close = close)
-            }
-          }
+      ) {
+        if (lookupLoading) {
+          CircularProgressIndicator(
+            Modifier.size(18.dp),
+            strokeWidth = 2.dp,
+            color = MaterialTheme.colors.onPrimary
+          )
+          Spacer(Modifier.width(8.dp))
         }
-      ) { Text("Connect by number") }
-      Text("After lookup, the usual SimpleX encrypted connection flow is used.")
+
+        Text(
+          if (lookupLoading) "Connecting..." else "Connect"
+        )
+      }
+
+      lookupError?.let { error ->
+        Text(
+          error,
+          color = MaterialTheme.colors.error
+        )
+      }
     }
   }
 }
