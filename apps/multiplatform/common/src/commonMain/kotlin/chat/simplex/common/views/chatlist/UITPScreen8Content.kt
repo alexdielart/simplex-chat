@@ -48,8 +48,7 @@ private val introPink = Color(0xFFE5479B)
 
 @Composable
 internal fun UITPScreen8Content(
-  onShareLink: () -> Unit,
-  onConnectViaLinkOrQr: () -> Unit
+  onConnectByNumber: () -> Unit
 ) {
   Column(
     Modifier.fillMaxSize()
@@ -69,17 +68,10 @@ internal fun UITPScreen8Content(
     )
     Spacer(Modifier.height(24.dp))
     UITPScreen8Card(
-      label = stringResource(MR.strings.let_someone_connect_to_you),
-      icon = painterResource(MR.images.ic_add_link),
+      label = stringResource(MR.strings.uitp_connect_by_number),
+      icon = painterResource(MR.images.ic_search),
       glow = introPurple.copy(alpha = 0.28f),
-      onClick = onShareLink
-    )
-    Spacer(Modifier.height(14.dp))
-    UITPScreen8Card(
-      label = stringResource(MR.strings.connect_via_link_or_qr_code),
-      icon = painterResource(MR.images.ic_qr_code_scanner),
-      glow = introPink.copy(alpha = 0.22f),
-      onClick = onConnectViaLinkOrQr
+      onClick = onConnectByNumber
     )
     Spacer(Modifier.height(24.dp))
   }

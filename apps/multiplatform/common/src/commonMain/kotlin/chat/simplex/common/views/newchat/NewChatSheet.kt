@@ -503,7 +503,7 @@ private fun ContactsSearchBar(
     )
     SearchTextField(
       Modifier.weight(1f).onFocusChanged { focused = it.hasFocus }.focusRequester(focusRequester),
-      placeholder = stringResource(MR.strings.search_or_paste_simplex_link),
+      placeholder = stringResource(if (appPlatform.isAndroid) MR.strings.search_verb else MR.strings.search_or_paste_simplex_link),
       alwaysVisible = true,
       searchText = searchText,
       trailingContent = null,
@@ -547,6 +547,18 @@ private fun ContactsSearchBar(
       snapshotFlow { searchText.value.text }
         .distinctUntilChanged()
         .collect {
+          if (appPlatform.isAndroid) {
+            searchShowingSimplexLink.value = false
+            searchChatFilteredBySimplexLink.value = emptySet()
+            connectNameCandidate.value = null
+
+            if (it.isEmpty() && listState.layoutInfo.totalItemsCount > 0) {
+              listState.scrollToItem(0)
+            }
+
+            return@collect
+          }
+
           val target = strConnectTarget(it.trim())
           if (target is ConnectTarget.Link) {
             hideKeyboard(view)

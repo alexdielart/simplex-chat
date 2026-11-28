@@ -103,6 +103,14 @@ private fun showNewChatSheet(oneHandUI: State<Boolean>) {
   connectProgressManager.cancelConnectProgress()
   ModalManager.start.closeModals()
   ModalManager.end.closeModals()
+
+  if (appPlatform.isAndroid) {
+    ModalManager.start.showModalCloseable { close ->
+      UITPNumberPoC(chatModel.currentRemoteHost.value?.remoteHostId, close)
+    }
+    return
+  }
+
   chatModel.newChatSheetVisible.value = true
   ModalManager.start.showCustomModal { close ->
     val close = {
@@ -472,15 +480,8 @@ private fun AndroidOnboardingCards() {
   }
   Box(Modifier.fillMaxSize().padding(top = topPad, bottom = bottomPad)) {
     UITPScreen8Content(
-      onShareLink = {
-        ModalManager.start.showModalCloseable { close ->
-          NewChatView(chatModel.currentRemoteHost.value, NewChatOption.INVITE, close = close)
-        }
-      },
-      onConnectViaLinkOrQr = {
-        ModalManager.start.showModalCloseable { close ->
-          NewChatView(chatModel.currentRemoteHost.value, NewChatOption.CONNECT, showQRCodeScanner = true, close = close)
-        }
+      onConnectByNumber = {
+        showNewChatSheet(oneHandUI)
       }
     )
   }
@@ -514,7 +515,7 @@ private fun BoxScope.NewChatSheetFloatingButton(oneHandUI: State<Boolean>, stopp
     backgroundColor = if (uitpScreen8Visible && !stopped) Color.Transparent else if (!stopped) MaterialTheme.colors.primary else MaterialTheme.colors.secondary,
     contentColor = Color.White
   ) {
-    Icon(painterResource(MR.images.ic_edit_filled), stringResource(MR.strings.add_contact_or_create_group), Modifier.size(22.dp * fontSizeSqrtMultiplier))
+    Icon(painterResource(MR.images.ic_edit_filled), stringResource(if (appPlatform.isAndroid) MR.strings.uitp_connect_by_number else MR.strings.add_contact_or_create_group), Modifier.size(22.dp * fontSizeSqrtMultiplier))
   }
 }
 
@@ -613,7 +614,7 @@ private fun ChatListToolbar(userPickerState: MutableStateFlow<AnimatedViewState>
           ) {
             Icon(
               painterResource(MR.images.ic_edit_filled),
-              stringResource(MR.strings.add_contact_or_create_group),
+              stringResource(if (appPlatform.isAndroid) MR.strings.uitp_connect_by_number else MR.strings.add_contact_or_create_group),
               Modifier.size(sp16),
               tint = Color.White
             )
@@ -815,7 +816,7 @@ private fun ChatListSearchBar(listState: LazyListState, searchText: MutableState
       )
       SearchTextField(
         Modifier.weight(1f).onFocusChanged { focused = it.hasFocus }.focusRequester(focusRequester),
-        placeholder = stringResource(MR.strings.search_or_paste_simplex_link),
+        placeholder = stringResource(if (appPlatform.isAndroid) MR.strings.search_verb else MR.strings.search_or_paste_simplex_link),
         alwaysVisible = true,
         searchText = searchText,
         enabled = !remember { searchShowingSimplexLink }.value,
@@ -851,6 +852,18 @@ private fun ChatListSearchBar(listState: LazyListState, searchText: MutableState
         snapshotFlow { searchText.value.text }
           .distinctUntilChanged()
           .collectLatest {
+            if (appPlatform.isAndroid) {
+              searchShowingSimplexLink.value = false
+              searchChatFilteredBySimplexLink.value = emptySet()
+              connectNameCandidate.value = null
+
+              if (it.isEmpty() && listState.layoutInfo.totalItemsCount > 0) {
+                listState.scrollToItem(0)
+              }
+
+              return@collectLatest
+            }
+
             val target = strConnectTarget(it.trim())
             if (target is ConnectTarget.Link) {
               hideKeyboard(view)
