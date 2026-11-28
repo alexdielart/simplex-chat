@@ -99,14 +99,14 @@ private fun showSupportSimpleXDismissAlert() {
   )
 }
 
-private fun showNewChatSheet(oneHandUI: State<Boolean>) {
+private fun showNewChatSheet(oneHandUI: State<Boolean>, numberState: UITPOwnNumberState?) {
   connectProgressManager.cancelConnectProgress()
   ModalManager.start.closeModals()
   ModalManager.end.closeModals()
 
   if (appPlatform.isAndroid) {
     ModalManager.start.showModalCloseable { close ->
-      UITPNumberPoC(chatModel.currentRemoteHost.value?.remoteHostId, close)
+      UITPNumberPoC(chatModel.currentRemoteHost.value?.remoteHostId, close, numberState)
     }
     return
   }
@@ -244,31 +244,40 @@ fun ChatListView(chatModel: ChatModel, userPickerState: MutableStateFlow<Animate
       VideoPlayerHolder.stopAll()
     }
   }
+  val numberState = if (appPlatform.isAndroid &&
+      chatModel.chatRunning.value == true &&
+      chatModel.currentUser.value != null &&
+      !chatModel.switchingUsersAndHosts.value) {
+    rememberUITPOwnNumber(chatModel.currentRemoteHost.value?.remoteHostId)
+  } else null
+
   val searchText = rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
   val listState = rememberLazyListState(lazyListState.first, lazyListState.second)
   Box(Modifier.fillMaxSize()) {
     if (oneHandUI.value) {
-      ChatListWithLoadingScreen(searchText, listState)
+      ChatListWithLoadingScreen(searchText, listState, numberState)
       Column(Modifier.align(Alignment.BottomCenter)) {
         ChatListToolbar(
           userPickerState,
           listState,
           stopped,
           setPerformLA,
+          numberState,
         )
       }
     } else {
-      ChatListWithLoadingScreen(searchText, listState)
+      ChatListWithLoadingScreen(searchText, listState, numberState)
       Column {
         ChatListToolbar(
           userPickerState,
           listState,
           stopped,
           setPerformLA,
+          numberState,
         )
       }
       if (searchText.value.text.isEmpty() && !chatModel.desktopNoUserNoRemote && chatModel.chatRunning.value == true) {
-        NewChatSheetFloatingButton(oneHandUI, stopped)
+        NewChatSheetFloatingButton(oneHandUI, stopped, numberState)
       }
     }
   }
@@ -454,14 +463,14 @@ private fun ConnectBannerCard() {
 }
 
 @Composable
-private fun BoxScope.ChatListWithLoadingScreen(searchText: MutableState<TextFieldValue>, listState: LazyListState) {
+private fun BoxScope.ChatListWithLoadingScreen(searchText: MutableState<TextFieldValue>, listState: LazyListState, numberState: UITPOwnNumberState?) {
   if (chatModel.chatRunning.value == null) {
     Text(stringResource(MR.strings.loading_chats), Modifier.align(Alignment.Center), color = MaterialTheme.colors.secondary)
   } else if (shouldShowOnboarding()) {
-    if (appPlatform.isAndroid) AndroidOnboardingCards()
+    if (appPlatform.isAndroid) AndroidOnboardingCards(numberState)
   } else {
     if (!chatModel.desktopNoUserNoRemote) {
-      ChatList(searchText = searchText, listState)
+      ChatList(searchText = searchText, listState, numberState)
     }
     if (chatModel.chats.value.isEmpty() && !chatModel.switchingUsersAndHosts.value && !chatModel.desktopNoUserNoRemote) {
       Text(stringResource(MR.strings.you_have_no_chats), Modifier.align(Alignment.Center), color = MaterialTheme.colors.secondary)
@@ -470,7 +479,7 @@ private fun BoxScope.ChatListWithLoadingScreen(searchText: MutableState<TextFiel
 }
 
 @Composable
-private fun AndroidOnboardingCards() {
+private fun AndroidOnboardingCards(numberState: UITPOwnNumberState?) {
   val oneHandUI = remember { appPrefs.oneHandUI.state }
   val topPad = topPaddingToContent(false)
   val bottomPad = if (oneHandUI.value) {
@@ -478,22 +487,26 @@ private fun AndroidOnboardingCards() {
   } else {
     WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
   }
-  Box(Modifier.fillMaxSize().padding(top = topPad, bottom = bottomPad)) {
-    UITPScreen8Content(
-      onConnectByNumber = {
-        showNewChatSheet(oneHandUI)
-      }
-    )
+  Column(Modifier.fillMaxSize().padding(top = topPad, bottom = bottomPad)) {
+    numberState?.let { UITPOwnNumberRow(it) }
+
+    Box(Modifier.weight(1f)) {
+      UITPScreen8Content(
+        onConnectByNumber = {
+          showNewChatSheet(oneHandUI, numberState)
+        }
+      )
+    }
   }
 }
 
 @Composable
-private fun BoxScope.NewChatSheetFloatingButton(oneHandUI: State<Boolean>, stopped: Boolean) {
+private fun BoxScope.NewChatSheetFloatingButton(oneHandUI: State<Boolean>, stopped: Boolean, numberState: UITPOwnNumberState?) {
   val uitpScreen8Visible = appPlatform.isAndroid && shouldShowOnboarding()
   FloatingActionButton(
     onClick = {
       if (!stopped) {
-        showNewChatSheet(oneHandUI)
+        showNewChatSheet(oneHandUI, numberState)
       }
     },
     Modifier
@@ -536,7 +549,7 @@ private fun ConnectButton(text: String, onClick: () -> Unit) {
 }
 
 @Composable
-private fun ChatListToolbar(userPickerState: MutableStateFlow<AnimatedViewState>, listState: LazyListState, stopped: Boolean, setPerformLA: (Boolean) -> Unit) {
+private fun ChatListToolbar(userPickerState: MutableStateFlow<AnimatedViewState>, listState: LazyListState, stopped: Boolean, setPerformLA: (Boolean) -> Unit, numberState: UITPOwnNumberState?) {
   val serversSummary: MutableState<PresentedServersSummary?> = remember { mutableStateOf(null) }
   val barButtons = arrayListOf<@Composable RowScope.() -> Unit>()
   val updatingProgress = remember { chatModel.updatingProgress }.value
@@ -603,7 +616,7 @@ private fun ChatListToolbar(userPickerState: MutableStateFlow<AnimatedViewState>
       barButtons.add {
         IconButton(
           onClick = {
-            showNewChatSheet(oneHandUI)
+            showNewChatSheet(oneHandUI, numberState)
           },
         ) {
           Box(
@@ -971,7 +984,7 @@ fun BoxScope.NavigationBarBackground(modifier: Modifier, color: Color = Material
 }
 
 @Composable
-private fun BoxScope.ChatList(searchText: MutableState<TextFieldValue>, listState: LazyListState) {
+private fun BoxScope.ChatList(searchText: MutableState<TextFieldValue>, listState: LazyListState, numberState: UITPOwnNumberState?) {
   var scrollDirection by remember { mutableStateOf(ScrollDirection.Idle) }
   var previousIndex by remember { mutableStateOf(0) }
   var previousScrollOffset by remember { mutableStateOf(0) }
@@ -1049,10 +1062,12 @@ private fun BoxScope.ChatList(searchText: MutableState<TextFieldValue>, listStat
               ConnectByNameRow(candidate, searchText, connectNameCandidate, close = null)
             }
             ChatListSearchBar(listState, searchText, searchShowingSimplexLink, searchChatFilteredBySimplexLink, connectNameCandidate)
+          numberState?.let { UITPOwnNumberRow(it) }
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.ime))
           }
         } else {
           ChatListSearchBar(listState, searchText, searchShowingSimplexLink, searchChatFilteredBySimplexLink, connectNameCandidate)
+          numberState?.let { UITPOwnNumberRow(it) }
           // top toolbar: search bar above, so on desktop the connect row goes above the tags
           TagsOrConnectByName(searchText, connectNameCandidate) { candidate ->
             ConnectByNameRow(candidate, searchText, connectNameCandidate, close = null)

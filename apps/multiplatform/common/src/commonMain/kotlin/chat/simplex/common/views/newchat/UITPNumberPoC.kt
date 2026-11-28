@@ -5,6 +5,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -28,80 +29,191 @@ import chat.simplex.res.MR
  * UUID is created once on this device and must match the Messenger UUID
  * entered there. No additional tokens or account login are involved.
  */
+class UITPOwnNumberState {
+  var ownNumber by mutableStateOf<String?>(null)
+  var addressLoading by mutableStateOf(false)
+  var registrationLoading by mutableStateOf(false)
+  var addressError by mutableStateOf<String?>(null)
+  var registrationError by mutableStateOf<String?>(null)
+  var addressAttempt by mutableStateOf(0)
+  var registrationAttempt by mutableStateOf(0)
+}
+
 @Composable
-fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
-  if (!appPlatform.isAndroid) {
-    Text(stringResource(MR.strings.uitp_number_android_only))
-    return
-  }
-
+fun rememberUITPOwnNumber(rhId: Long?): UITPOwnNumberState {
   val currentUser = chatModel.currentUser.value
-  val clipboard = LocalClipboardManager.current
-  val scope = rememberCoroutineScope()
-
   val installationUuid = remember { UITPDirectoryPlatform.installationUuid() }
   val serverUrl = UITPDirectoryPlatform.serverUrl()
-
-  var addressLoading by remember(rhId, currentUser?.userId) { mutableStateOf(false) }
-  var addressError by remember(rhId, currentUser?.userId) { mutableStateOf<String?>(null) }
-  var addressAttempt by remember(rhId, currentUser?.userId) { mutableStateOf(0) }
   val ownAddress = chatModel.userAddress.value?.connLinkContact?.simplexChatUri(short = true)
 
-  var ownNumber by remember(rhId, currentUser?.userId) { mutableStateOf<String?>(null) }
-  var registrationLoading by remember { mutableStateOf(false) }
-  var registrationError by remember { mutableStateOf<String?>(null) }
-  var registrationAttempt by remember { mutableStateOf(0) }
+  val state = remember(rhId, currentUser?.userId, installationUuid, serverUrl) {
+    UITPOwnNumberState()
+  }
 
-  var lookupNumber by rememberSaveable { mutableStateOf("") }
-  var lookupLoading by remember { mutableStateOf(false) }
-  var lookupError by remember { mutableStateOf<StringResource?>(null) }
+  LaunchedEffect(state, state.addressAttempt) {
+    state.addressError = null
 
-  // Reuse the core helper: create only when the address is confirmed missing.
-  LaunchedEffect(rhId, currentUser?.userId, addressAttempt) {
-    addressError = null
-    when {
-      currentUser == null -> addressError = "No active SimpleX profile."
-      chatModel.userAddress.value != null -> Unit
-      else -> {
-        addressLoading = true
-        withBGApi {
-          try {
-            val address = chatModel.controller.apiEnsureUserAddress(rhId)
+    if (currentUser != null && chatModel.userAddress.value == null) {
+      state.addressLoading = true
+
+      withBGApi {
+        try {
+          val address = chatModel.controller.apiEnsureUserAddress(rhId)
+
+          if (chatModel.currentUser.value?.userId == currentUser.userId &&
+              chatModel.currentRemoteHost.value?.remoteHostId == rhId) {
             if (address != null) {
               chatModel.userAddress.value = address
             } else if (chatModel.userAddress.value == null) {
-              addressError = "Could not create the SimpleX address. Check connection and retry."
+              state.addressError = "Address unavailable"
             }
-          } catch (e: Exception) {
-            addressError = "Could not create the SimpleX address. Check connection and retry."
-          } finally {
-            addressLoading = false
           }
+        } catch (e: CancellationException) {
+          throw e
+        } catch (e: Exception) {
+          state.addressError = "Address unavailable"
+        } finally {
+          state.addressLoading = false
         }
       }
     }
   }
 
-  // Once the address exists, publish it automatically using the registered
-  // device UUID. Laravel keeps the same number for repeated registrations.
-  LaunchedEffect(rhId, currentUser?.userId, ownAddress, installationUuid, serverUrl, registrationAttempt) {
-    ownNumber = null
-    registrationError = null
-    if (currentUser == null || ownAddress == null || !validUITPServerUrl(serverUrl)) return@LaunchedEffect
+  LaunchedEffect(state, ownAddress, state.registrationAttempt) {
+    state.ownNumber = null
+    state.registrationError = null
 
-    registrationLoading = true
+    if (currentUser == null || ownAddress == null ||
+        !validUITPServerUrl(serverUrl)) return@LaunchedEffect
+
+    state.registrationLoading = true
+
     try {
-      val response = uitpDirectoryRegister(serverUrl, installationUuid, ownAddress)
-      ownNumber = response.number
-      registrationError = response.error
+      val response = uitpDirectoryRegister(
+        serverUrl, installationUuid, ownAddress
+      )
+
+      state.ownNumber = response.number
+      state.registrationError = response.error
     } catch (e: CancellationException) {
       throw e
     } catch (e: Exception) {
-      registrationError = "Unable to reach Directory API: " + (e.message ?: "network error")
+      state.registrationError = "Directory unavailable"
     } finally {
-      registrationLoading = false
+      state.registrationLoading = false
     }
   }
+
+  return state
+}
+
+@Composable
+fun UITPOwnNumberRow(state: UITPOwnNumberState) {
+  val clipboard = LocalClipboardManager.current
+  val number = state.ownNumber
+
+  var copyAttempt by remember(number) { mutableStateOf(0) }
+
+  LaunchedEffect(number, copyAttempt) {
+    if (copyAttempt != 0) {
+      delay(2000)
+      copyAttempt = 0
+    }
+  }
+
+  Row(
+    Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    Column(Modifier.weight(1f)) {
+      Text(
+        stringResource(MR.strings.uitp_my_number),
+        style = MaterialTheme.typography.caption,
+        color = MaterialTheme.colors.secondary
+      )
+
+      if (number != null) {
+        Text(
+          number,
+          style = MaterialTheme.typography.h6,
+          color = MaterialTheme.colors.primary
+        )
+      } else if (state.addressLoading || state.registrationLoading) {
+        Text(
+          stringResource(MR.strings.uitp_preparing_number),
+          style = MaterialTheme.typography.caption
+        )
+      } else {
+        Text(
+          if (state.addressError != null || state.registrationError != null)
+            stringResource(MR.strings.uitp_number_unavailable)
+          else "—",
+          style = MaterialTheme.typography.body2
+        )
+      }
+    }
+
+    if (number != null) {
+      IconButton(onClick = {
+        clipboard.setText(AnnotatedString(number))
+        copyAttempt += 1
+      }) {
+        Icon(
+          painterResource(
+            if (copyAttempt != 0) MR.images.ic_check
+            else MR.images.ic_content_copy
+          ),
+          contentDescription = stringResource(
+            if (copyAttempt != 0) MR.strings.uitp_number_copied
+            else MR.strings.uitp_copy_number
+          ),
+          tint = MaterialTheme.colors.primary
+        )
+      }
+    } else if (!state.addressLoading && !state.registrationLoading) {
+      TextButton(onClick = {
+        if (chatModel.userAddress.value == null) {
+          state.addressAttempt += 1
+        } else {
+          state.registrationAttempt += 1
+        }
+      }) {
+        Text(stringResource(MR.strings.uitp_number_retry))
+      }
+    }
+  }
+
+  Divider()
+}
+
+@Composable
+fun UITPNumberPoC(
+  rhId: Long?,
+  close: () -> Unit,
+  sharedNumberState: UITPOwnNumberState? = null
+) {
+  if (!appPlatform.isAndroid) {
+    Text(stringResource(MR.strings.uitp_number_android_only))
+    return
+  }
+
+  val clipboard = LocalClipboardManager.current
+  val scope = rememberCoroutineScope()
+  val installationUuid = remember { UITPDirectoryPlatform.installationUuid() }
+  val serverUrl = UITPDirectoryPlatform.serverUrl()
+
+  val numberState = sharedNumberState ?: rememberUITPOwnNumber(rhId)
+
+  val ownAddress = chatModel.userAddress.value?.connLinkContact?.simplexChatUri(short = true)
+  val ownNumber = numberState.ownNumber
+  val addressLoading = numberState.addressLoading
+  val registrationLoading = numberState.registrationLoading
+  val addressError = numberState.addressError
+  val registrationError = numberState.registrationError
+
+  var lookupNumber by rememberSaveable { mutableStateOf("") }
+  var lookupLoading by remember { mutableStateOf(false) }
+  var lookupError by remember { mutableStateOf<StringResource?>(null) }
 
   var copyAttempt by remember(ownNumber) { mutableStateOf(0) }
 
@@ -172,7 +284,7 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
 
         OutlinedButton(
           enabled = !addressLoading,
-          onClick = { addressAttempt += 1 }
+          onClick = { numberState.addressAttempt += 1 }
         ) {
           Text(stringResource(MR.strings.uitp_number_retry))
         }
@@ -186,7 +298,7 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
 
         OutlinedButton(
           enabled = !registrationLoading && ownAddress != null,
-          onClick = { registrationAttempt += 1 }
+          onClick = { numberState.registrationAttempt += 1 }
         ) {
           Text(stringResource(MR.strings.uitp_number_retry))
         }
