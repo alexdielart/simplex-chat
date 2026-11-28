@@ -1068,7 +1068,7 @@ private fun BoxScope.ChatList(searchText: MutableState<TextFieldValue>, listStat
       } }
       ChatListNavLinkView(chat, nextChatSelected)
     }
-    if (!addressCreationCardShown.value) {
+    if (!appPlatform.isAndroid && !addressCreationCardShown.value) {
       item {
         ChatListFeatureCards()
       }

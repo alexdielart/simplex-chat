@@ -15,6 +15,11 @@ import chat.simplex.common.platform.*
 import chat.simplex.common.views.helpers.*
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.icerock.moko.resources.compose.painterResource
+import chat.simplex.res.MR
 
 /**
  * Android proof of concept for Laravel Directory API.
@@ -26,7 +31,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
   if (!appPlatform.isAndroid) {
-    Text("Connection by number is available on Android only.")
+    Text(stringResource(MR.strings.uitp_number_android_only))
     return
   }
 
@@ -49,7 +54,7 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
 
   var lookupNumber by rememberSaveable { mutableStateOf("") }
   var lookupLoading by remember { mutableStateOf(false) }
-  var lookupError by remember { mutableStateOf<String?>(null) }
+  var lookupError by remember { mutableStateOf<StringResource?>(null) }
 
   // Reuse the core helper: create only when the address is confirmed missing.
   LaunchedEffect(rhId, currentUser?.userId, addressAttempt) {
@@ -98,6 +103,15 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
     }
   }
 
+  var copyAttempt by remember(ownNumber) { mutableStateOf(0) }
+
+  LaunchedEffect(ownNumber, copyAttempt) {
+    if (copyAttempt != 0) {
+      delay(2000)
+      copyAttempt = 0
+    }
+  }
+
   val validLookup = Regex("^[1-9][0-9]{9}$").matches(lookupNumber)
 
   ColumnWithScrollBar {
@@ -106,11 +120,11 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
       verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
       Text(
-        "Connect by number",
+        stringResource(MR.strings.uitp_connect_by_number),
         style = MaterialTheme.typography.h5
       )
 
-      Text("My UITP number")
+      Text(stringResource(MR.strings.uitp_my_number))
 
       if (addressLoading || registrationLoading) {
         Row(
@@ -120,7 +134,7 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
             Modifier.size(18.dp),
             strokeWidth = 2.dp
           )
-          Text("Preparing your number...")
+          Text(stringResource(MR.strings.uitp_preparing_number))
         }
       }
 
@@ -133,15 +147,26 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
         OutlinedButton(
           onClick = {
             clipboard.setText(AnnotatedString(number))
+            copyAttempt += 1
           }
         ) {
-          Text("Copy my number")
+          if (copyAttempt != 0) {
+            Icon(
+              painterResource(MR.images.ic_check),
+              contentDescription = null,
+              modifier = Modifier.size(18.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(MR.strings.uitp_number_copied))
+          } else {
+            Text(stringResource(MR.strings.uitp_copy_number))
+          }
         }
       }
 
       if (addressError != null) {
         Text(
-          "Could not prepare your number.",
+          stringResource(MR.strings.uitp_prepare_number_failed),
           color = MaterialTheme.colors.error
         )
 
@@ -149,13 +174,13 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
           enabled = !addressLoading,
           onClick = { addressAttempt += 1 }
         ) {
-          Text("Retry")
+          Text(stringResource(MR.strings.uitp_number_retry))
         }
       }
 
       if (registrationError != null) {
         Text(
-          "Could not retrieve your number. Check your Messenger access and connection.",
+          stringResource(MR.strings.uitp_retrieve_number_failed),
           color = MaterialTheme.colors.error
         )
 
@@ -163,13 +188,13 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
           enabled = !registrationLoading && ownAddress != null,
           onClick = { registrationAttempt += 1 }
         ) {
-          Text("Retry")
+          Text(stringResource(MR.strings.uitp_number_retry))
         }
       }
 
       if (!validUITPServerUrl(serverUrl)) {
         Text(
-          "Service unavailable.",
+          stringResource(MR.strings.uitp_number_unavailable),
           color = MaterialTheme.colors.error
         )
       }
@@ -185,7 +210,7 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
 
           lookupError = null
         },
-        label = { Text("Enter UITP number") },
+        label = { Text(stringResource(MR.strings.uitp_enter_number)) },
         singleLine = true,
         enabled = !lookupLoading,
         keyboardOptions = KeyboardOptions(
@@ -231,13 +256,13 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
                     )
                   }
                 } else {
-                  lookupError = "Could not connect to this number. Check the number and your Messenger access."
+                  lookupError = MR.strings.uitp_lookup_failed
                 }
               }
             } catch (e: CancellationException) {
               throw e
             } catch (e: Exception) {
-              lookupError = "Connection failed. Please try again."
+              lookupError = MR.strings.uitp_connection_failed
             } finally {
               lookupLoading = false
             }
@@ -254,13 +279,13 @@ fun UITPNumberPoC(rhId: Long?, close: () -> Unit) {
         }
 
         Text(
-          if (lookupLoading) "Connecting..." else "Connect"
+          if (lookupLoading) stringResource(MR.strings.uitp_number_connecting) else stringResource(MR.strings.uitp_number_connect)
         )
       }
 
       lookupError?.let { error ->
         Text(
-          error,
+          stringResource(error),
           color = MaterialTheme.colors.error
         )
       }

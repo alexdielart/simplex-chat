@@ -2943,4 +2943,21 @@
     <string name="uitp_network_configure_notifications">Настроить уведомления</string>
     <string name="uitp_network_continue">Продолжить</string>
   <string name="uitp_notifications_done">Готово</string>
+
+  <!-- UITP connection by number -->
+  <string name="uitp_connect_by_number">Подключиться по номеру</string>
+  <string name="uitp_my_number">Мой номер UITP</string>
+  <string name="uitp_copy_number">Скопировать номер</string>
+  <string name="uitp_number_copied">Скопировано</string>
+  <string name="uitp_preparing_number">Получение вашего номера…</string>
+  <string name="uitp_enter_number">Введите номер абонента</string>
+  <string name="uitp_number_connect">Подключиться</string>
+  <string name="uitp_number_connecting">Подключение…</string>
+  <string name="uitp_number_retry">Повторить</string>
+  <string name="uitp_number_unavailable">Сервис недоступен.</string>
+  <string name="uitp_prepare_number_failed">Не удалось подготовить ваш номер.</string>
+  <string name="uitp_retrieve_number_failed">Не удалось получить ваш номер. Проверьте доступ к мессенджеру и подключение к Интернету.</string>
+  <string name="uitp_lookup_failed">Не удалось подключиться. Проверьте номер абонента и доступ к мессенджеру.</string>
+  <string name="uitp_connection_failed">Не удалось подключиться. Попробуйте ещё раз.</string>
+  <string name="uitp_number_android_only">Подключение по номеру доступно только на Android.</string>
 </resources>

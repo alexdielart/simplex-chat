@@ -191,7 +191,7 @@ private fun ModalData.NewChatSheetLayout(
   val actionButtonsOriginal = listOfNotNull(
     if (appPlatform.isAndroid) Triple(
       painterResource(MR.images.ic_search),
-      "Connect by number",
+      stringResource(MR.strings.uitp_connect_by_number),
       connectByNumber,
     ) else null,
     Triple(

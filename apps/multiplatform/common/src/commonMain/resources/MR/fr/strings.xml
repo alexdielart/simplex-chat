@@ -2868,4 +2868,21 @@
     <string name="uitp_network_configure_notifications">Configurer les notifications</string>
     <string name="uitp_network_continue">Continuer</string>
   <string name="uitp_notifications_done">Terminé</string>
+
+  <!-- UITP connection by number -->
+  <string name="uitp_connect_by_number">Se connecter par numéro</string>
+  <string name="uitp_my_number">Mon numéro UITP</string>
+  <string name="uitp_copy_number">Copier mon numéro</string>
+  <string name="uitp_number_copied">Copié</string>
+  <string name="uitp_preparing_number">Obtention de votre numéro…</string>
+  <string name="uitp_enter_number">Saisissez le numéro UITP</string>
+  <string name="uitp_number_connect">Se connecter</string>
+  <string name="uitp_number_connecting">Connexion…</string>
+  <string name="uitp_number_retry">Réessayer</string>
+  <string name="uitp_number_unavailable">Service indisponible.</string>
+  <string name="uitp_prepare_number_failed">Impossible de préparer votre numéro.</string>
+  <string name="uitp_retrieve_number_failed">Impossible de récupérer votre numéro. Vérifiez votre accès à Messenger et votre connexion.</string>
+  <string name="uitp_lookup_failed">Impossible de se connecter à ce numéro. Vérifiez le numéro et votre accès à Messenger.</string>
+  <string name="uitp_connection_failed">Échec de la connexion. Veuillez réessayer.</string>
+  <string name="uitp_number_android_only">La connexion par numéro est disponible uniquement sur Android.</string>
 </resources>

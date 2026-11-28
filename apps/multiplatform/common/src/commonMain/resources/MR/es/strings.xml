@@ -2875,4 +2875,21 @@
     <string name="uitp_network_configure_notifications">Configurar notificaciones</string>
     <string name="uitp_network_continue">Continuar</string>
   <string name="uitp_notifications_done">Listo</string>
+
+  <!-- UITP connection by number -->
+  <string name="uitp_connect_by_number">Conectar por número</string>
+  <string name="uitp_my_number">Mi número UITP</string>
+  <string name="uitp_copy_number">Copiar mi número</string>
+  <string name="uitp_number_copied">Copiado</string>
+  <string name="uitp_preparing_number">Obteniendo tu número…</string>
+  <string name="uitp_enter_number">Introduce el número UITP</string>
+  <string name="uitp_number_connect">Conectar</string>
+  <string name="uitp_number_connecting">Conectando…</string>
+  <string name="uitp_number_retry">Reintentar</string>
+  <string name="uitp_number_unavailable">Servicio no disponible.</string>
+  <string name="uitp_prepare_number_failed">No se pudo preparar tu número.</string>
+  <string name="uitp_retrieve_number_failed">No se pudo obtener tu número. Comprueba tu acceso a Messenger y tu conexión.</string>
+  <string name="uitp_lookup_failed">No se pudo conectar con este número. Comprueba el número y tu acceso a Messenger.</string>
+  <string name="uitp_connection_failed">Error de conexión. Inténtalo de nuevo.</string>
+  <string name="uitp_number_android_only">La conexión por número solo está disponible en Android.</string>
 </resources>

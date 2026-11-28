@@ -3252,4 +3252,21 @@
   <string name="uitp_network_configure_notifications">Configure notifications</string>
   <string name="uitp_network_continue">Continue</string>
   <string name="uitp_notifications_done">Done</string>
+
+  <!-- UITP connection by number -->
+  <string name="uitp_connect_by_number">Connect by number</string>
+  <string name="uitp_my_number">My UITP number</string>
+  <string name="uitp_copy_number">Copy my number</string>
+  <string name="uitp_number_copied">Copied</string>
+  <string name="uitp_preparing_number">Preparing your number…</string>
+  <string name="uitp_enter_number">Enter UITP number</string>
+  <string name="uitp_number_connect">Connect</string>
+  <string name="uitp_number_connecting">Connecting…</string>
+  <string name="uitp_number_retry">Retry</string>
+  <string name="uitp_number_unavailable">Service unavailable.</string>
+  <string name="uitp_prepare_number_failed">Could not prepare your number.</string>
+  <string name="uitp_retrieve_number_failed">Could not retrieve your number. Check your Messenger access and connection.</string>
+  <string name="uitp_lookup_failed">Could not connect to this number. Check the number and your Messenger access.</string>
+  <string name="uitp_connection_failed">Connection failed. Please try again.</string>
+  <string name="uitp_number_android_only">Connection by number is available on Android only.</string>
 </resources>
